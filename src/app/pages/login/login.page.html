@@ -7,14 +7,31 @@
       [control]="form.controls.email"
       type="email"
       placeholder="Email"
+      [ngClass]="{'invalid': form.controls.email.errors && isEmailTouched()}"
     ></app-login-input>
+
+    <div class="validator" *ngIf="form.controls.email.errors && isEmailTouched()">
+      <div *ngIf="form.controls.email.errors?.['required']">Email is required</div>
+      <div *ngIf="form.controls.email.errors?.['email']">Please enter a valid email</div>
+    </div>
 
     <app-login-input
       name="password"
       [control]="form.controls.password"
       type="password"
       placeholder="Password"
+      [ngClass]="{'invalid': form.controls.password.errors && isPasswordTouched()}"
     ></app-login-input>
+
+    <div class="validator" *ngIf="form.controls.password.errors && isPasswordTouched()">
+      <div *ngIf="form.controls.password.errors?.['required']">Password is required</div>
+    </div>
+
+    <app-auth-button
+      label="Login"
+      [disabled]="form.invalid"
+      (action)="onSubmit()">
+    </app-auth-button>
 
   </form>
 </ion-content>
