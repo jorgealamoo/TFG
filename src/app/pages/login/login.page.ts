@@ -5,6 +5,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
 import {LogoComponent} from "../../components/logo/logo.component";
 import {LoginInputComponent} from "../../components/login-input/login-input.component";
 import {AuthButtonComponent} from "../../components/auth-button/auth-button.component";
+import {SupabaseService} from "../../services/supabase.service";
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginPage implements OnInit {
     password: new FormControl('', [Validators.required])
   })
 
-  constructor() { }
+  constructor(private supabaseService: SupabaseService) { }
 
   ngOnInit() { }
 
@@ -33,9 +34,22 @@ export class LoginPage implements OnInit {
   }
 
   onSubmit() {
+    console.log('Trying to log in with:', this.form.value);
     if (this.form.valid) {
-      console.log('Trying to log in with:', this.form.value);
-      // Aquí podrías llamar a un servicio de autenticación
+      const credentials = {
+        email: this.form.value.email ?? "",
+        password: this.form.value.password ?? ""
+      };
+
+      this.supabaseService.signIn(credentials)
+        .then(response => {
+          console.log('Login successful:', response);
+        })
+        .catch(error => {
+          console.error('Login failed:', error);
+        });
+    } else {
+      console.log("Form is invalid");
     }
   }
 }
