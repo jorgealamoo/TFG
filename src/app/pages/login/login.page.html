@@ -1,0 +1,20 @@
+<app-logo></app-logo>
+<ion-content>
+  <form [formGroup]="form">
+
+    <app-login-input
+      name="email"
+      [control]="form.controls.email"
+      type="email"
+      placeholder="Email"
+    ></app-login-input>
+
+    <app-login-input
+      name="password"
+      [control]="form.controls.password"
+      type="password"
+      placeholder="Password"
+    ></app-login-input>
+
+  </form>
+</ion-content>

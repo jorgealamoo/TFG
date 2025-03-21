@@ -1,0 +1,9 @@
+ion-content form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+app-login-input {
+  margin-top: 20px;
+}
