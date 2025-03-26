@@ -1,0 +1,65 @@
+<app-logo></app-logo>
+<ion-content>
+  <div class="slogan">
+    <p>Your event, your community.</p>
+    <p>Join now.</p>
+  </div>
+
+  <form>
+    <app-signup-input
+      name="email"
+      [control]="form.controls.email"
+      type="email"
+      placeholder="Email"
+      [ngClass]="{'invalid': form.controls.email.errors && isEmailTouched()}"
+    ></app-signup-input>
+
+    <div class="validator" *ngIf="form.controls.email.errors && isEmailTouched()">
+      <div *ngIf="form.controls.email.errors?.['required']">Email is required</div>
+      <div *ngIf="form.controls.email.errors?.['email']">Please enter a valid email</div>
+    </div>
+
+    <app-signup-input
+      name="username"
+      [control]="form.controls.username"
+      type="username"
+      placeholder="Username"
+      [ngClass]="{'invalid': form.controls.username.errors && isUsernameTouched()}"
+    ></app-signup-input>
+
+    <div class="validator" *ngIf="form.controls.username.errors && isUsernameTouched()">
+      <div *ngIf="form.controls.password.errors?.['required']">Username is required</div>
+    </div>
+
+    <app-signup-input
+      name="password"
+      [control]="form.controls.password"
+      type="password"
+      placeholder="Password"
+      [ngClass]="{'invalid': form.controls.password.errors && isPasswordTouched()}"
+    ></app-signup-input>
+
+    <div class="validator" *ngIf="form.controls.password.errors && isPasswordTouched()">
+      <div *ngIf="form.controls.password.errors?.['required']">Password is required</div>
+    </div>
+
+    <app-signup-input
+      name="repeatPassword"
+      [control]="form.controls.repeatPassword"
+      type="password"
+      placeholder="Repeat Password"
+      [ngClass]="{'invalid': form.controls.repeatPassword.errors && isRepeatPasswordTouched()}"
+    ></app-signup-input>
+
+    <div class="validator" *ngIf="form.controls.repeatPassword.errors && isRepeatPasswordTouched()">
+      <div *ngIf="form.controls.password.errors?.['required']">Repeat password is required</div>
+      <div *ngIf="form.controls.repeatPassword.errors?.['notSame']">Passwords do not match</div>
+    </div>
+
+    <app-auth-button
+      label="Sign up"
+      [disabled]="form.invalid"
+      (action)="onSubmit()">
+    </app-auth-button>
+  </form>
+</ion-content>
