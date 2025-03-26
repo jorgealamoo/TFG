@@ -6,13 +6,15 @@ import {LogoComponent} from "../../components/logo/logo.component";
 import {LoginInputComponent} from "../../components/login-input/login-input.component";
 import {AuthButtonComponent} from "../../components/auth-button/auth-button.component";
 import {SupabaseService} from "../../services/supabase.service";
+import {GoogleFacebookButtonComponent} from "../../components/google-facebook-button/google-facebook-button.component";
+import {AuthRedirectButtonComponent} from "../../components/auth-redirect-button/auth-redirect-button.component";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, LogoComponent, LoginInputComponent, ReactiveFormsModule, AuthButtonComponent]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, LogoComponent, LoginInputComponent, ReactiveFormsModule, AuthButtonComponent, GoogleFacebookButtonComponent, AuthRedirectButtonComponent]
 })
 export class LoginPage implements OnInit {
 
@@ -51,5 +53,9 @@ export class LoginPage implements OnInit {
     } else {
       console.log("Form is invalid");
     }
+  }
+
+  onSocialLogin(provider: string) {
+    console.log(`Login with ${provider}`);
   }
 }

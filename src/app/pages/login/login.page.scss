@@ -18,3 +18,72 @@ app-auth-button {
   font-family: 'Inter', sans-serif;
   margin-top: 15px;
 }
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  margin: 20px 40px;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  border-bottom: 1px solid #3BADEC;
+  width: 150px;
+}
+
+.divider span {
+  padding: 0 10px;
+  color: #3BADEC;
+  font-weight: normal;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+}
+
+.social-login {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.forgot-password {
+  text-align: center;
+  margin-top: 15px;
+
+  a {
+    color: #3B82F6;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: normal;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+.separator {
+  width: 340px;
+  height: 1px;
+  background-color: #3BADEC;
+  margin: 20px auto;
+}
+
+.register {
+  text-align: center;
+
+  a {
+    color: #3B82F6;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: normal;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .redirect-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+}
