@@ -5,6 +5,9 @@ import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/stan
 import {LogoComponent} from "../../components/logo/logo.component";
 import {SignupInputComponent} from "../../components/signup-input/signup-input.component";
 import {AuthButtonComponent} from "../../components/auth-button/auth-button.component";
+import {SupabaseService} from "../../services/supabase.service";
+import {AlertController} from "@ionic/angular";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-signup',
@@ -28,7 +31,11 @@ export class SignupPage implements OnInit {
     return password?.value == repeatPassword?.value ? null : { notSame: true };
   }
 
-  constructor() { }
+  constructor(
+    private supabaseService: SupabaseService,
+    private alertController: AlertController,
+    private router: Router
+  ) { }
 
   ngOnInit() { }
 
@@ -48,7 +55,55 @@ export class SignupPage implements OnInit {
     return this.form.controls.repeatPassword.touched;
   }
 
-  onSubmit() {
+  async onSubmit() {
+    if (this.form.valid) {
+      console.log('Trying to sign up with:', this.form.value);
+      const password = this.form.value.password ?? "";
+      const repeatPassword = this.form.value.repeatPassword ?? "";
 
+      if (password !== repeatPassword) {
+        await this.showAlert('Error', 'Passwords do not match');
+        return;
+      }
+
+      const credentials = {
+        email: this.form.value.email ?? "",
+        username: this.form.value.username ?? "",
+        password: this.form.value.password ?? "",
+        repeatPassword: this.form.value.repeatPassword ?? ""
+      };
+
+      this.supabaseService.signUp(credentials)
+        .then((response) => {
+          console.log("Signup successful", response);
+          this.router.navigate(['/login']);
+        })
+        .catch(async (error) => {
+          console.error("Signup failed", error);
+          await this.showAlert('Signup Error', error.message || error);
+        });
+    } else {
+      console.log("Form is invalid");
+      await this.showAlert('Invalid Form', 'Please fill all required fields.');
+    }
+  }
+
+  async showAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
+
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  }
+
+  ionViewWillLeave() {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
   }
 }

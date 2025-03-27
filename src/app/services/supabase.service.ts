@@ -28,29 +28,16 @@ export class SupabaseService {
       });
 
       if (error) {
-        console.error(error);
+        console.error("Error in supabase.auth.signUp() method", error);
         reject(error);
       }
 
-      const {error: dbError} = await this.supabase
-        .from("users")
-        .insert([{
-          id: data.user?.id,
-          email: credentials.email,
-          username: credentials.username,
-          name: "",
-          surname: "",
-          profile_image: "../../assets/images/default-profile-image.jpg",
-          createdAt: new Date().toISOString(),
-        }]);
-
-      if (dbError) {
-        console.error(dbError);
-        reject(dbError);
+      if (data?.user) {
+        await this.updateUsername(data.user.id, credentials.username); // Call the function to update username
+        resolve(data);
+      } else {
+        reject('User not found after sign-up');
       }
-
-      resolve(data);
-
     });
   }
 
@@ -73,6 +60,17 @@ export class SupabaseService {
     });
 
     this.router.navigate(['/']);
+  }
+
+  async updateUsername(userId: string, username: string) {
+    const {error} = await this.supabase
+      .from('users')
+      .update({username: username})
+      .eq('id', userId);
+
+    if (error) {
+      console.error("Error updating username", error);
+    }
   }
 
   getTodos() {

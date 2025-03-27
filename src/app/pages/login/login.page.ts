@@ -58,4 +58,10 @@ export class LoginPage implements OnInit {
   onSocialLogin(provider: string) {
     console.log(`Login with ${provider}`);
   }
+
+  ionViewWillLeave() {
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+  }
 }
