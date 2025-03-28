@@ -8,13 +8,15 @@ import {AuthButtonComponent} from "../../components/auth-button/auth-button.comp
 import {SupabaseService} from "../../services/supabase.service";
 import {AlertController} from "@ionic/angular";
 import {Router} from "@angular/router";
+import {GoogleFacebookButtonComponent} from "../../components/google-facebook-button/google-facebook-button.component";
+import {AuthRedirectButtonComponent} from "../../components/auth-redirect-button/auth-redirect-button.component";
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.page.html',
   styleUrls: ['./signup.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, LogoComponent, SignupInputComponent, AuthButtonComponent]
+  imports: [IonContent, CommonModule, FormsModule, LogoComponent, SignupInputComponent, AuthButtonComponent, GoogleFacebookButtonComponent, AuthRedirectButtonComponent]
 })
 export class SignupPage implements OnInit {
 
@@ -57,7 +59,6 @@ export class SignupPage implements OnInit {
 
   async onSubmit() {
     if (this.form.valid) {
-      console.log('Trying to sign up with:', this.form.value);
       const password = this.form.value.password ?? "";
       const repeatPassword = this.form.value.repeatPassword ?? "";
 
@@ -99,6 +100,10 @@ export class SignupPage implements OnInit {
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
+  }
+
+  onSocialLogin(provider: string) {
+    console.log(`Sign Up with ${provider}`);
   }
 
   ionViewWillLeave() {

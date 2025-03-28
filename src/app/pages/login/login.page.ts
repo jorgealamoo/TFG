@@ -8,13 +8,15 @@ import {AuthButtonComponent} from "../../components/auth-button/auth-button.comp
 import {SupabaseService} from "../../services/supabase.service";
 import {GoogleFacebookButtonComponent} from "../../components/google-facebook-button/google-facebook-button.component";
 import {AuthRedirectButtonComponent} from "../../components/auth-redirect-button/auth-redirect-button.component";
+import {Router} from "@angular/router";
+import {AlertController} from "@ionic/angular";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, LogoComponent, LoginInputComponent, ReactiveFormsModule, AuthButtonComponent, GoogleFacebookButtonComponent, AuthRedirectButtonComponent]
+  imports: [IonContent, CommonModule, FormsModule, LogoComponent, LoginInputComponent, ReactiveFormsModule, AuthButtonComponent, GoogleFacebookButtonComponent, AuthRedirectButtonComponent]
 })
 export class LoginPage implements OnInit {
 
@@ -23,7 +25,11 @@ export class LoginPage implements OnInit {
     password: new FormControl('', [Validators.required])
   })
 
-  constructor(private supabaseService: SupabaseService) { }
+  constructor(
+    private supabaseService: SupabaseService,
+    private alertController: AlertController,
+    private router: Router
+  ) { }
 
   ngOnInit() { }
 
@@ -35,8 +41,7 @@ export class LoginPage implements OnInit {
     return this.form.controls.password.touched;
   }
 
-  onSubmit() {
-    console.log('Trying to log in with:', this.form.value);
+  async onSubmit() {
     if (this.form.valid) {
       const credentials = {
         email: this.form.value.email ?? "",
@@ -46,12 +51,27 @@ export class LoginPage implements OnInit {
       this.supabaseService.signIn(credentials)
         .then(response => {
           console.log('Login successful:', response);
+          this.router.navigate(['/home']);
         })
-        .catch(error => {
-          console.error('Login failed:', error);
+        .catch(async error => {
+          await this.showAlert("Email or password is incorrect", "Please check your email and password and try again.");
         });
     } else {
       console.log("Form is invalid");
+      await this.showAlert("Invalid form", "Please check your email and password.");
+    }
+  }
+
+  async showAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
+
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
     }
   }
 

@@ -62,4 +62,22 @@
       (action)="onSubmit()">
     </app-auth-button>
   </form>
+
+  <div class="divider">
+    <span>or</span>
+  </div>
+
+  <div class="social-login">
+    <app-google-facebook-button provider="google" (action)="onSocialLogin($event)"></app-google-facebook-button>
+    <app-google-facebook-button provider="facebook" (action)="onSocialLogin($event)"></app-google-facebook-button>
+  </div>
+
+  <div class="separator"></div>
+
+  <div class="sign-in">
+    <a>Have an account?</a>
+    <div class="redirect-button">
+      <app-auth-redirect-button redirectTo="login"></app-auth-redirect-button>
+    </div>
+  </div>
 </ion-content>
