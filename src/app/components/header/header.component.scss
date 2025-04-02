@@ -1,0 +1,23 @@
+ion-button img {
+  width: 36px;
+  height: 36px;
+}
+
+ion-title {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: black;
+  font-size: 20px;
+}
+
+.next-text{
+  padding-right: 5px;
+
+  span {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: #3B82F6;
+    font-size: 18px;
+    text-transform: none;
+  }
+}

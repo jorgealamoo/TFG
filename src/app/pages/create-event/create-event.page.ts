@@ -3,16 +3,16 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 import {FooterComponent} from "../../components/footer/footer.component";
-import {HomeHeaderComponent} from "../../components/home-header/home-header.component";
+import {HeaderComponent} from "../../components/header/header.component";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
+  selector: 'app-create-event',
+  templateUrl: './create-event.page.html',
+  styleUrls: ['./create-event.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, FooterComponent, HomeHeaderComponent]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, FooterComponent, HeaderComponent]
 })
-export class HomePage implements OnInit {
+export class CreateEventPage implements OnInit {
 
   constructor() { }
 

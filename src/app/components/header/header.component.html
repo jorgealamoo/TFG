@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="showBack">
+      <ion-button (click)="goBack()">
+        <img ngSrc="assets/images/arrow_back.png" alt="Back" height="96" width="96">
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>{{ title }}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button *ngIf="showCheck" (click)="onCheck()">
+        <img ngSrc="assets/images/check.png" alt="Check" height="96" width="96">
+      </ion-button>
+      <ion-button *ngIf="showNext" (click)="onNext()" class="next-text">
+        <span>Next</span>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

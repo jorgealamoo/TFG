@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {IonIcon, IonTabBar, IonTabButton, IonTabs} from "@ionic/angular/standalone";
+import {NavigationEnd, Router} from "@angular/router";
 
 @Component({
   selector: 'app-footer',
@@ -11,28 +12,33 @@ import {IonIcon, IonTabBar, IonTabButton, IonTabs} from "@ionic/angular/standalo
     CommonModule,
     IonTabs,
     IonTabBar,
-    IonTabButton,
-    IonIcon
+    IonTabButton
   ]
 })
-export class FooterComponent implements OnInit {
-
+export class FooterComponent {
+  currentRoute: string = '';
   selectedTab: string = 'home';
 
   tabs = [
-    { name: 'my_events', defaultIcon: 'assets/images/my_event.png', selectedIcon: 'assets/images/my_event_selected.png' },
-    { name: 'create', defaultIcon: 'assets/images/create.png', selectedIcon: 'assets/images/create_selected.png' },
-    { name: 'home', defaultIcon: 'assets/images/home.png', selectedIcon: 'assets/images/home_selected.png' },
-    { name: 'search', defaultIcon: 'assets/images/search.png', selectedIcon: 'assets/images/search_selected.png' },
-    { name: 'profile', defaultIcon: 'assets/images/profile.png', selectedIcon: 'assets/images/profile_selected.png' },
+    { name: 'my_events', route: 'my_events', defaultIcon: 'assets/images/my_event.png', selectedIcon: 'assets/images/my_event_selected.png' },
+    { name: 'create', route: '/create-event', defaultIcon: 'assets/images/create.png', selectedIcon: 'assets/images/create_selected.png' },
+    { name: 'home', route: '/home', defaultIcon: 'assets/images/home.png', selectedIcon: 'assets/images/home_selected.png' },
+    { name: 'search', route: '/search', defaultIcon: 'assets/images/search.png', selectedIcon: 'assets/images/search_selected.png' },
+    { name: 'profile', route: '/profile', defaultIcon: 'assets/images/profile.png', selectedIcon: 'assets/images/profile_selected.png' },
   ];
 
-  constructor() { }
+  constructor(private router: Router) {
+    this.currentRoute = this.router.url;
 
-  selectTab(tab: any) {
-    this.selectedTab = tab.name;
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.currentRoute = event.url;
+      }
+    });
   }
 
-  ngOnInit() {}
+  selectTab(tab: any) {
+    this.router.navigate([tab.route]);
+  }
 
 }

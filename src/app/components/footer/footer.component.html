@@ -1,7 +1,7 @@
 <ion-tabs>
   <ion-tab-bar slot="bottom">
     <ion-tab-button *ngFor="let tab of tabs" (click)="selectTab(tab)">
-      <img [attr.src]="selectedTab === tab.name ? tab.selectedIcon : tab.defaultIcon" width="40" height="40">
+      <img [attr.src]="currentRoute === tab.route ? tab.selectedIcon : tab.defaultIcon" width="40" height="40">
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
