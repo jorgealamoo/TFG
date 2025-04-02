@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {IonIcon, IonTabBar, IonTabButton, IonTabs} from "@ionic/angular/standalone";
+import {IonTabBar, IonTabButton, IonTabs} from "@ionic/angular/standalone";
 import {NavigationEnd, Router} from "@angular/router";
 
 @Component({

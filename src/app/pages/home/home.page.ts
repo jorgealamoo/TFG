@@ -10,13 +10,10 @@ import {HomeHeaderComponent} from "../../components/home-header/home-header.comp
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, FooterComponent, HomeHeaderComponent]
+  imports: [CommonModule, FormsModule, HomeHeaderComponent]
 })
-export class HomePage implements OnInit {
+export class HomePage {
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
 }
