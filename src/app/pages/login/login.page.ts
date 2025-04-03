@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonContent } from '@ionic/angular/standalone';
 import {LogoComponent} from "../../components/logo/logo.component";
 import {LoginInputComponent} from "../../components/login-input/login-input.component";
 import {AuthButtonComponent} from "../../components/auth-button/auth-button.component";
@@ -18,7 +18,7 @@ import {AlertController} from "@ionic/angular";
   standalone: true,
   imports: [IonContent, CommonModule, FormsModule, LogoComponent, LoginInputComponent, ReactiveFormsModule, AuthButtonComponent, GoogleFacebookButtonComponent, AuthRedirectButtonComponent]
 })
-export class LoginPage implements OnInit {
+export class LoginPage {
 
   form = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -31,7 +31,6 @@ export class LoginPage implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit() { }
 
   isEmailTouched() {
     return this.form.controls.email.touched;

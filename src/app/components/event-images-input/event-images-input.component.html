@@ -1,0 +1,5 @@
+<div class="image-upload-container" (click)="triggerFileInput()">
+  <img src="assets/images/add-images.png" alt="Add Image" />
+  <p>Add Images</p>
+  <input #fileInput type="file" (change)="onFileChange($event)" accept="image/*" multiple hidden />
+</div>
