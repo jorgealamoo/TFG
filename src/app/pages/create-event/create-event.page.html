@@ -1,7 +1,18 @@
 <app-header title="Create new event"  [showNext]="true"></app-header>
 
 <ion-content>
-  <form>
+  <form [formGroup]="form">
     <app-event-images-input></app-event-images-input>
+
+    <div class="form-inputs">
+      <app-event-input
+        name="eventTitle"
+        [control]="form.controls.title"
+        type="text"
+        placeholder="Title"
+        [ngClass]="{'invalid': form.controls.title.errors && isTitleTouched()}"
+      ></app-event-input>
+    </div>
+
   </form>
 </ion-content>
