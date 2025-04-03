@@ -5,13 +5,14 @@ import {HeaderComponent} from "../../components/header/header.component";
 import {IonContent} from "@ionic/angular/standalone";
 import {EventImagesInputComponent} from "../../components/event-images-input/event-images-input.component";
 import {EventInputComponent} from "../../components/event-input/event-input.component";
+import {RichTextEditorComponent} from "../../components/rich-text-editor/rich-text-editor.component";
 
 @Component({
   selector: 'app-create-event',
   templateUrl: './create-event.page.html',
   styleUrls: ['./create-event.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent, IonContent, EventImagesInputComponent, EventInputComponent, ReactiveFormsModule]
+  imports: [CommonModule, FormsModule, HeaderComponent, IonContent, EventImagesInputComponent, EventInputComponent, ReactiveFormsModule, RichTextEditorComponent]
 })
 export class CreateEventPage {
   form = new FormGroup({
@@ -28,6 +29,10 @@ export class CreateEventPage {
 
   isTitleTouched() {
     return this.form.controls.title.touched;
+  }
+
+  isDescriptionTouched() {
+    return this.form.controls.description.touched;
   }
 
 }
