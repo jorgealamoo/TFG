@@ -1,0 +1,26 @@
+ion-textarea {
+  min-width: 350px;
+  width: 85% !important;
+  margin: 10px auto !important;
+  background-color: #F4F4F4 !important;
+  border: 1px solid #3BADEC !important;
+  border-radius: 10px !important;
+  font-size: 18px;
+  font-family: 'Inter', sans-serif;
+  padding-left: 17px;
+  color: #000000;
+
+  &::placeholder {
+    font-size: 18px;
+    font-family: 'Inter', sans-serif;
+    font-weight: normal;
+    padding-left: 17px;
+    color: #575757;
+  }
+}
+
+ion-textarea.ng-invalid.ng-touched {
+  border: 1px solid red !important;
+  border-radius: 8px;
+}
+

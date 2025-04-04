@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Router} from "@angular/router";
 import {IonButton, IonButtons, IonHeader, IonTitle, IonToolbar} from "@ionic/angular/standalone";
 import {NgIf, NgOptimizedImage} from "@angular/common";
@@ -23,6 +23,8 @@ export class HeaderComponent {
   @Input() showNext: boolean = false;
   @Input() showCheck: boolean = false;
 
+  @Output() nextClicked = new EventEmitter<void>();
+
   constructor(private router: Router) { }
 
   goBack() {
@@ -30,7 +32,7 @@ export class HeaderComponent {
   }
 
   onNext() {
-    console.log('Next clicked');
+    this.nextClicked.emit();
   }
 
   onCheck() {

@@ -1,4 +1,8 @@
-<app-header title="Create new event"  [showNext]="true"></app-header>
+<app-header
+  title="Create new event"
+  [showNext]="true"
+  (nextClicked)="logFormValue()"
+></app-header>
 
 <ion-content>
   <form [formGroup]="form">
@@ -13,7 +17,11 @@
         [ngClass]="{'invalid': form.controls.title.errors && isTitleTouched()}"
       ></app-event-input>
 
-
+      <app-event-description-input
+        name="eventDescription"
+        [control]="form.controls.description"
+        [ngClass]="{'invalid': form.controls.description.errors && isDescriptionTouched()}"
+      ></app-event-description-input>
     </div>
 
   </form>
