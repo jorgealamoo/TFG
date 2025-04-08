@@ -12,6 +12,7 @@ import {EventCategorySelectComponent} from "../../components/event-category-sele
 import {EventDateInputComponent} from "../../components/event-date-input/event-date-input.component";
 import {EventHourInputComponent} from "../../components/event-hour-input/event-hour-input.component";
 import {EventPrivacySelectComponent} from "../../components/event-privacy-select/event-privacy-select.component";
+import {EventFormDataService} from "../../services/event-form-data.service";
 
 @Component({
   selector: 'app-create-event',
@@ -31,7 +32,19 @@ export class CreateEventPage {
     privacy: new FormControl('', [Validators.required]),
   })
 
-  constructor() { }
+  constructor(private eventFormDataService: EventFormDataService) { }
+
+  goToNextPage() {
+    this.eventFormDataService.setData('title', this.form.controls.title.value);
+    this.eventFormDataService.setData('description', this.form.controls.description.value);
+    this.eventFormDataService.setData('categories', this.form.controls.categories.value);
+    this.eventFormDataService.setData('location', this.form.controls.location.value);
+    this.eventFormDataService.setData('date', this.form.controls.date.value);
+    this.eventFormDataService.setData('hour', this.form.controls.hour.value);
+    this.eventFormDataService.setData('privacy', this.form.controls.privacy.value);
+
+    console.log(this.eventFormDataService.getData());
+  }
 
   isTitleTouched() {
     return this.form.controls.title.touched;
@@ -39,10 +52,6 @@ export class CreateEventPage {
 
   isDescriptionTouched() {
     return this.form.controls.description.touched;
-  }
-
-  logFormValue() {
-    console.log(this.form.value);
   }
 
   isLocationTouched() {
