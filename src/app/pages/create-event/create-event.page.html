@@ -22,6 +22,18 @@
         [control]="form.controls.description"
         [ngClass]="{'invalid': form.controls.description.errors && isDescriptionTouched()}"
       ></app-event-description-input>
+
+      <app-event-category-select
+        [control]="form.controls.categories"
+      ></app-event-category-select>
+
+      <app-event-input
+        name="eventLocation"
+        [control]="form.controls.location"
+        type="text"
+        placeholder="Location"
+        [ngClass]="{'invalid': form.controls.location.errors && isLocationTouched()}"
+      ></app-event-input>
     </div>
 
   </form>

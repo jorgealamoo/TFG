@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {HeaderComponent} from "../../components/header/header.component";
 import {IonContent} from "@ionic/angular/standalone";
 import {EventImagesInputComponent} from "../../components/event-images-input/event-images-input.component";
 import {EventInputComponent} from "../../components/event-input/event-input.component";
-import {RichTextEditorComponent} from "../../components/rich-text-editor/rich-text-editor.component";
 import {
   EventDescriptionInputComponent
 } from "../../components/event-description-input/event-description-input.component";
+import {EventCategorySelectComponent} from "../../components/event-category-select/event-category-select.component";
 
 @Component({
   selector: 'app-create-event',
   templateUrl: './create-event.page.html',
   styleUrls: ['./create-event.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent, IonContent, EventImagesInputComponent, EventInputComponent, ReactiveFormsModule, EventDescriptionInputComponent]
+  imports: [CommonModule, FormsModule, HeaderComponent, IonContent, EventImagesInputComponent, EventInputComponent, ReactiveFormsModule, EventDescriptionInputComponent, EventCategorySelectComponent]
 })
 export class CreateEventPage {
   form = new FormGroup({
@@ -42,4 +42,7 @@ export class CreateEventPage {
     console.log(this.form.value);
   }
 
+  isLocationTouched() {
+    return this.form.controls.location.touched;;
+  }
 }
