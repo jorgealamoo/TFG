@@ -35,9 +35,16 @@
         [ngClass]="{'invalid': form.controls.location.errors && isLocationTouched()}"
       ></app-event-input>
 
-      <app-event-date-input
-        [control]="form.controls.date"
-      ></app-event-date-input>
+      <div class="datetime-container">
+        <app-event-date-input
+          [control]="form.controls.date"
+          [ngClass]="{'invalid': form.controls.date.errors && isDateTouched()}"
+        ></app-event-date-input>
+        <app-event-hour-input
+          [control]="form.controls.hour"
+          [ngClass]="{'invalid': form.controls.hour.errors && isHourTouched()}"
+        ></app-event-hour-input>
+      </div>
     </div>
 
   </form>
