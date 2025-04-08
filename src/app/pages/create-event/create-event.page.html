@@ -35,6 +35,8 @@
         [ngClass]="{'invalid': form.controls.location.errors && isLocationTouched()}"
       ></app-event-input>
 
+      <ion-label class="datetime-label">Event Date:</ion-label>
+
       <div class="datetime-container">
         <app-event-date-input
           [control]="form.controls.date"

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {HeaderComponent} from "../../components/header/header.component";
-import {IonContent} from "@ionic/angular/standalone";
+import {IonContent, IonLabel} from "@ionic/angular/standalone";
 import {EventImagesInputComponent} from "../../components/event-images-input/event-images-input.component";
 import {EventInputComponent} from "../../components/event-input/event-input.component";
 import {
@@ -18,7 +18,7 @@ import {EventPrivacySelectComponent} from "../../components/event-privacy-select
   templateUrl: './create-event.page.html',
   styleUrls: ['./create-event.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent, IonContent, EventImagesInputComponent, EventInputComponent, ReactiveFormsModule, EventDescriptionInputComponent, EventCategorySelectComponent, EventDateInputComponent, EventHourInputComponent, EventPrivacySelectComponent]
+  imports: [CommonModule, FormsModule, HeaderComponent, IonContent, EventImagesInputComponent, EventInputComponent, ReactiveFormsModule, EventDescriptionInputComponent, EventCategorySelectComponent, EventDateInputComponent, EventHourInputComponent, EventPrivacySelectComponent, IonLabel]
 })
 export class CreateEventPage {
   form = new FormGroup({
