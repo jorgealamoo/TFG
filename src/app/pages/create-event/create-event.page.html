@@ -34,6 +34,10 @@
         placeholder="Location"
         [ngClass]="{'invalid': form.controls.location.errors && isLocationTouched()}"
       ></app-event-input>
+
+      <app-event-date-input
+        [control]="form.controls.date"
+      ></app-event-date-input>
     </div>
 
   </form>

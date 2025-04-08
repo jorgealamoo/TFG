@@ -9,13 +9,14 @@ import {
   EventDescriptionInputComponent
 } from "../../components/event-description-input/event-description-input.component";
 import {EventCategorySelectComponent} from "../../components/event-category-select/event-category-select.component";
+import {EventDateInputComponent} from "../../components/event-date-input/event-date-input.component";
 
 @Component({
   selector: 'app-create-event',
   templateUrl: './create-event.page.html',
   styleUrls: ['./create-event.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent, IonContent, EventImagesInputComponent, EventInputComponent, ReactiveFormsModule, EventDescriptionInputComponent, EventCategorySelectComponent]
+  imports: [CommonModule, FormsModule, HeaderComponent, IonContent, EventImagesInputComponent, EventInputComponent, ReactiveFormsModule, EventDescriptionInputComponent, EventCategorySelectComponent, EventDateInputComponent]
 })
 export class CreateEventPage {
   form = new FormGroup({
@@ -43,6 +44,6 @@ export class CreateEventPage {
   }
 
   isLocationTouched() {
-    return this.form.controls.location.touched;;
+    return this.form.controls.location.touched;
   }
 }

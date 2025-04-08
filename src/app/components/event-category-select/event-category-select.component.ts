@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {IonItem, IonLabel, IonSelect, IonSelectOption} from "@ionic/angular/standalone";
+import {IonSelect, IonSelectOption} from "@ionic/angular/standalone";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 import {NgForOf} from "@angular/common";
 
@@ -8,7 +8,6 @@ import {NgForOf} from "@angular/common";
   templateUrl: './event-category-select.component.html',
   styleUrls: ['./event-category-select.component.scss'],
   imports: [
-    IonItem,
     IonSelect,
     ReactiveFormsModule,
     IonSelectOption,
