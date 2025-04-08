@@ -45,6 +45,11 @@
           [ngClass]="{'invalid': form.controls.hour.errors && isHourTouched()}"
         ></app-event-hour-input>
       </div>
+
+      <app-event-privacy-select
+        [control]="form.controls.privacy"
+        [ngClass]="{'invalid': form.controls.privacy.errors && isPrivacyTouched()}"
+      ></app-event-privacy-select>
     </div>
 
   </form>
