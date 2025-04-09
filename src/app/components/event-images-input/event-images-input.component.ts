@@ -1,14 +1,34 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {showAlert} from "../../services/utils";
 import {AlertController} from "@ionic/angular";
+import {EventFormDataService} from "../../services/event-form-data.service";
+import {NgForOf, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-event-images-input',
   templateUrl: './event-images-input.component.html',
   styleUrls: ['./event-images-input.component.scss'],
+  imports: [
+    NgIf,
+    NgForOf
+  ]
 })
-export class EventImagesInputComponent {
+export class EventImagesInputComponent implements OnInit {
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
+
+  imagesPreview: string[] = [];
+
+  constructor(
+    private alertController: AlertController,
+    private eventFormDataService: EventFormDataService
+  ) { }
+
+  ngOnInit() {
+    const images = this.eventFormDataService.getImages();
+    this.imagesPreview = images.map(image =>
+      typeof image === 'string' ? image : URL.createObjectURL(image)
+    );
+  }
 
   triggerFileInput() {
     this.fileInput.nativeElement.click();
@@ -31,12 +51,25 @@ export class EventImagesInputComponent {
       }
 
       if (validImages.length > 0) {
+        const currentImages = this.eventFormDataService.getImages();
+        const updatedImages = [...currentImages, ...validImages];
+        this.eventFormDataService.setImages(updatedImages);
+        this.imagesPreview = updatedImages.map(image =>
+          typeof image === 'string' ? image : URL.createObjectURL(image)
+        );
         console.log('Imágenes válidas seleccionadas:', validImages);
       }
     }
   }
 
-  constructor(private alertController: AlertController) { }
+  removeImage(index: number) {
+    const currentImages = this.eventFormDataService.getImages();
+    currentImages.splice(index, 1);
+    this.eventFormDataService.setImages(currentImages);
 
+    this.imagesPreview = currentImages.map(image =>
+      typeof image === 'string' ? image : URL.createObjectURL(image)
+    );
+  }
 
 }
