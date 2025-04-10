@@ -28,7 +28,7 @@ export class HeaderComponent {
   constructor(private router: Router) { }
 
   goBack() {
-    this.router.navigate(['../']);
+    window.history.back();
   }
 
   onNext() {

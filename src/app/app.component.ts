@@ -19,9 +19,4 @@ export class AppComponent {
       }
     });
   }
-
-  shouldShowFooter(): boolean {
-    const pagesWithFooter = ["/home", "/create-event", "/my-events", "/search", "/profile"];
-    return pagesWithFooter.includes(this.currentRoute);
-  }
 }

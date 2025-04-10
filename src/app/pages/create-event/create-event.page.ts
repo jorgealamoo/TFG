@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {HeaderComponent} from "../../components/header/header.component";
-import {IonContent, IonLabel} from "@ionic/angular/standalone";
+import {IonContent, IonLabel, NavController} from "@ionic/angular/standalone";
 import {EventImagesInputComponent} from "../../components/event-images-input/event-images-input.component";
 import {EventInputComponent} from "../../components/event-input/event-input.component";
 import {
@@ -13,13 +13,15 @@ import {EventDateInputComponent} from "../../components/event-date-input/event-d
 import {EventHourInputComponent} from "../../components/event-hour-input/event-hour-input.component";
 import {EventPrivacySelectComponent} from "../../components/event-privacy-select/event-privacy-select.component";
 import {EventFormDataService} from "../../services/event-form-data.service";
+import {Router} from "@angular/router";
+import {FooterComponent} from "../../components/footer/footer.component";
 
 @Component({
   selector: 'app-create-event',
   templateUrl: './create-event.page.html',
   styleUrls: ['./create-event.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent, IonContent, EventImagesInputComponent, EventInputComponent, ReactiveFormsModule, EventDescriptionInputComponent, EventCategorySelectComponent, EventDateInputComponent, EventHourInputComponent, EventPrivacySelectComponent, IonLabel]
+  imports: [CommonModule, FormsModule, HeaderComponent, IonContent, EventImagesInputComponent, EventInputComponent, ReactiveFormsModule, EventDescriptionInputComponent, EventCategorySelectComponent, EventDateInputComponent, EventHourInputComponent, EventPrivacySelectComponent, IonLabel, FooterComponent]
 })
 export class CreateEventPage {
   form = new FormGroup({
@@ -32,7 +34,10 @@ export class CreateEventPage {
     privacy: new FormControl('', [Validators.required]),
   })
 
-  constructor(private eventFormDataService: EventFormDataService) { }
+  constructor(
+    private eventFormDataService: EventFormDataService,
+    private router: Router
+  ) { }
 
   goToNextPage() {
     this.eventFormDataService.setData('title', this.form.controls.title.value);
@@ -43,6 +48,7 @@ export class CreateEventPage {
     this.eventFormDataService.setData('hour', this.form.controls.hour.value);
     this.eventFormDataService.setData('privacy', this.form.controls.privacy.value);
 
+    this.router.navigate(['/create-event-shopping-list']);
     console.log(this.eventFormDataService.getData());
   }
 

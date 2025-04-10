@@ -10,7 +10,7 @@ import {HomeHeaderComponent} from "../../components/home-header/home-header.comp
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, HomeHeaderComponent]
+    imports: [CommonModule, FormsModule, HomeHeaderComponent, FooterComponent]
 })
 export class HomePage {
 
