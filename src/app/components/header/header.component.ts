@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Router} from "@angular/router";
 import {IonButton, IonButtons, IonHeader, IonTitle, IonToolbar} from "@ionic/angular/standalone";
 import {NgIf, NgOptimizedImage} from "@angular/common";
 
@@ -25,7 +24,7 @@ export class HeaderComponent {
 
   @Output() nextClicked = new EventEmitter<void>();
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   goBack() {
     window.history.back();

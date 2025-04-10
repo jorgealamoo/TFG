@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
-import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { IonRouterOutlet } from '@ionic/angular/standalone';
 import {NavigationEnd, Router} from "@angular/router";
-import {FooterComponent} from "./components/footer/footer.component";
-import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  imports: [IonApp, IonRouterOutlet, FooterComponent, NgIf],
+  imports: [IonRouterOutlet],
 })
 export class AppComponent {
   currentRoute: string = '';

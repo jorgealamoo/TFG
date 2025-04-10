@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {HeaderComponent} from "../../components/header/header.component";
-import {IonContent, IonLabel, NavController} from "@ionic/angular/standalone";
+import {IonContent, IonLabel} from "@ionic/angular/standalone";
 import {EventImagesInputComponent} from "../../components/event-images-input/event-images-input.component";
 import {EventInputComponent} from "../../components/event-input/event-input.component";
 import {
