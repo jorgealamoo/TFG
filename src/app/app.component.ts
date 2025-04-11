@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonRouterOutlet } from '@ionic/angular/standalone';
-import {NavigationEnd, Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -8,13 +7,6 @@ import {NavigationEnd, Router} from "@angular/router";
   imports: [IonRouterOutlet],
 })
 export class AppComponent {
-  currentRoute: string = '';
 
-  constructor(private router: Router) {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.currentRoute = event.url;
-      }
-    });
-  }
+  constructor() {  }
 }

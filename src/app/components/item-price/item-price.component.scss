@@ -1,0 +1,53 @@
+ion-item {
+  --inner-border-width: 0px;
+  margin-top: 10px;
+  position: relative;
+
+  ion-input {
+    background-color: #F4F4F4;
+    width: 130px;
+    height: 40px;
+    border: 1px solid #3BADEC;
+    border-radius: 10px;
+    padding-left: 17px;
+    font-size: 18px;
+    font-family: 'Inter', sans-serif;
+    color: #000000;
+
+    &::placeholder {
+      font-size: 18px;
+      font-family: 'Inter', sans-serif;
+      color: #575757;
+      padding-left: 17px;
+    }
+
+    ion-text {
+      font-size: 18px;
+      font-family: 'Inter', sans-serif;
+      color: #575757;
+      padding-right: 17px;
+    }
+  }
+
+  .currency {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    color: #000000;
+    pointer-events: none;
+  }
+}
+
+:host ::ng-deep .native-input.sc-ion-input-md {
+  padding-left: 17px;
+}
+
+ion-input.ng-invalid.ng-touched {
+  border: 1px solid red !important;
+  border-radius: 8px;
+}
+
+
