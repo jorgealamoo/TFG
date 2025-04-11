@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {ItemNameComponent} from "../item-name/item-name.component";
 import {ItemPriceComponent} from "../item-price/item-price.component";
-import {IonItem} from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-shopping-list-item',
@@ -9,14 +8,12 @@ import {IonItem} from "@ionic/angular/standalone";
   styleUrls: ['./shopping-list-item.component.scss'],
   imports: [
     ItemNameComponent,
-    ItemPriceComponent,
-    IonItem
+    ItemPriceComponent
   ]
 })
-export class ShoppingListItemComponent  implements OnInit {
+export class ShoppingListItemComponent {
 
   constructor() { }
 
-  ngOnInit() {}
 
 }
