@@ -6,9 +6,18 @@
 ></app-header>
 
 <ion-content>
-  <ion-text>
-    <h2 class="shopping-list-title">Shopping list</h2>
-  </ion-text>
+  <div class="shopping-list">
+    <ion-text>
+      <h2 class="shopping-list-title">Shopping list</h2>
+    </ion-text>
 
-  <app-shopping-list-item></app-shopping-list-item>
+    <div *ngFor="let item of shoppingListItems">
+      <app-shopping-list-item></app-shopping-list-item>
+    </div>
+
+    <div class="add-item-button" (click)="addItem()">
+      <img src="assets/images/add.png" alt="Add"/>
+      <span>Add item</span>
+    </div>
+  </div>
 </ion-content>
