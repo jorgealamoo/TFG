@@ -12,7 +12,10 @@
     </ion-text>
 
     <div *ngFor="let item of shoppingListItems">
-      <app-shopping-list-item></app-shopping-list-item>
+      <div class="shopping-list-item">
+        <app-item-name [(value)]="item.name"></app-item-name>
+        <app-item-price [(value)]="item.price"></app-item-price>
+      </div>
     </div>
 
     <div class="add-item-button" (click)="addItem()">

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {IonInput, IonItem} from "@ionic/angular/standalone";
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-item-name',
@@ -9,10 +9,13 @@ import {ReactiveFormsModule} from "@angular/forms";
   imports: [
     IonInput,
     IonItem,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class ItemNameComponent{
+  @Input() value: string = '';
+  @Output() valueChange = new EventEmitter<string>();
 
   constructor() { }
 

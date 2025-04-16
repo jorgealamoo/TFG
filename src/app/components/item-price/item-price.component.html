@@ -4,6 +4,8 @@
     inputmode="decimal"
     placeholder="0,00"
     class="item-price"
+    [ngModel]="displayValue"
+    (ngModelChange)="onInputChange($event)"
   >
     <ion-text slot="end" aria-hidden="true">€</ion-text>
   </ion-input>
