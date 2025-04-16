@@ -35,7 +35,8 @@ export class CreateEventShoppingListPage {
   }
 
   updateTotalPrice() {
-    this.totalPrice = this.shoppingListItems.reduce((sum, item) => sum + item.price, 0);
+    const rawTotal = this.shoppingListItems.reduce((sum, item) => sum + (Number(item.price) || 0), 0);
+    this.totalPrice = Math.round(rawTotal * 100) / 100;
   }
 
   goToNextPage() {
