@@ -14,7 +14,7 @@
     <div *ngFor="let item of shoppingListItems">
       <div class="shopping-list-item">
         <app-item-name [(value)]="item.name"></app-item-name>
-        <app-item-price [(value)]="item.price"></app-item-price>
+        <app-item-price [(value)]="item.price" (valueChange)="updateTotalPrice()"></app-item-price>
       </div>
     </div>
 
@@ -23,4 +23,9 @@
       <span>Add item</span>
     </div>
   </div>
+
+  <app-total-price
+    [value]="totalPrice"
+    (valueChange)="totalPrice = $event"
+  ></app-total-price>
 </ion-content>

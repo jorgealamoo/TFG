@@ -1,0 +1,7 @@
+<div class="total-price">
+  <span>Total price:</span>
+  <app-item-price
+    [value]="value"
+    (valueChange)="valueChange.emit($event)"
+  ></app-item-price>
+</div>
