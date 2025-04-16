@@ -6,13 +6,16 @@ import {IonContent, IonText} from "@ionic/angular/standalone";
 import {ItemNameComponent} from "../../components/item-name/item-name.component";
 import {ItemPriceComponent} from "../../components/item-price/item-price.component";
 import {TotalPriceComponent} from "../../components/total-price/total-price.component";
+import {
+  SplitCostsAutomaticallyComponent
+} from "../../components/split-costs-automatically/split-costs-automatically.component";
 
 @Component({
   selector: 'app-create-event-shopping-list',
   templateUrl: './create-event-shopping-list.page.html',
   styleUrls: ['./create-event-shopping-list.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent, IonContent, IonText, ItemNameComponent, ItemPriceComponent, TotalPriceComponent]
+  imports: [CommonModule, FormsModule, HeaderComponent, IonContent, IonText, ItemNameComponent, ItemPriceComponent, TotalPriceComponent, SplitCostsAutomaticallyComponent]
 })
 export class CreateEventShoppingListPage {
   shoppingListItems = [

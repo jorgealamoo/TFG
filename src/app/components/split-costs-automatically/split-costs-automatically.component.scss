@@ -1,0 +1,98 @@
+/* From Uiverse.io by alexruix modified by Jorge Álamo Santana*/
+
+.switch {
+  font-size: 14px;
+  position: relative;
+  display: inline-block;
+  width: 3em;
+  height: 1.7em;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #B0B0B0;
+  border: 2px solid #B0B0B0;
+  transition: .4s;
+  border-radius: 2em;
+  outline: none;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1.5em;
+  width: 1.5em;
+  border-radius: 50%;
+  outline: 2px solid #B0B0B0;
+  left: -1px;
+  bottom: -1px;
+  background-color: #fff;
+  transition: transform .25s ease-in-out 0s;
+}
+
+.slider-icon {
+  opacity: 0;
+  height: 0.6em;
+  width: 0.6em;
+  stroke-width: 6;
+  position: absolute;
+  z-index: 999;
+  stroke: #3BADEC;
+  right: 60%;
+  top: 30%;
+  transition: right ease-in-out .3s, opacity ease-in-out .15s;
+}
+
+input:checked + .slider {
+  background-color: #3BADEC;
+  border: 2px solid #3BADEC;
+}
+
+input:checked + .slider .slider-icon {
+  opacity: 1;
+  right: 20%;
+}
+
+input:checked + .slider:before {
+  transform: translateX(1.3em);
+  outline-color: #3BADEC;
+}
+
+
+.split-costs-switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 25px;
+
+  ion-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: #000000;
+    margin-left: 20px;
+    display: block;
+  }
+}
+
+.split-costs-description {
+  color: #3B82F6;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  text-align: center;
+  display: block;
+  margin-top: 5px;
+}
