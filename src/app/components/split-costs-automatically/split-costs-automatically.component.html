@@ -4,14 +4,20 @@
 
     <!-- From Uiverse.io by alexruix -->
     <label class="switch">
-      <input type="checkbox" checked>
+      <input type="checkbox" [checked]="splitCostsEnabled" (change)="onToggleChange($event)">
       <span class="slider">
         <svg class="slider-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation"><path fill="none" d="m4 16.5 8 8 16-16"></path></svg>
       </span>
     </label>
   </div>
 
-  <span class="split-costs-description">
+  <span class="split-costs-description" *ngIf="splitCostsEnabled">
     If enabled, the total cost will be divided among participants.
   </span>
+
+  <app-total-price
+    text="Entry price:"
+    *ngIf="!splitCostsEnabled"
+    [(value)]="entryPrice"
+  ></app-total-price>
 </div>

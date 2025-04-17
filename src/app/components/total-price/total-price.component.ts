@@ -10,6 +10,7 @@ import {ItemPriceComponent} from "../item-price/item-price.component";
   ]
 })
 export class TotalPriceComponent {
+  @Input() text: string = 'Total price:';
   @Input() value: number = 0;
   @Output() valueChange = new EventEmitter<number>();
 

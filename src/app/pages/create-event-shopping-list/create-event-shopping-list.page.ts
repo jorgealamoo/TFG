@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {HeaderComponent} from "../../components/header/header.component";
@@ -18,6 +18,9 @@ import {
   imports: [CommonModule, FormsModule, HeaderComponent, IonContent, IonText, ItemNameComponent, ItemPriceComponent, TotalPriceComponent, SplitCostsAutomaticallyComponent]
 })
 export class CreateEventShoppingListPage {
+  @ViewChild(SplitCostsAutomaticallyComponent)
+  splitCostsComponent!: SplitCostsAutomaticallyComponent;
+
   shoppingListItems = [
     { name: '', price: 0 },
     { name: '', price: 0 },
@@ -42,5 +45,10 @@ export class CreateEventShoppingListPage {
   goToNextPage() {
     console.log(this.shoppingListItems);
     console.log("Total price: " + this.totalPrice);
+
+    if (this.splitCostsComponent) {
+      console.log("Split costs enabled:", this.splitCostsComponent.splitCostsEnabled);
+      console.log("Entry price:", this.splitCostsComponent.entryPrice);
+    }
   }
 }
