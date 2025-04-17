@@ -10,6 +10,7 @@ import {
   SplitCostsAutomaticallyComponent
 } from "../../components/split-costs-automatically/split-costs-automatically.component";
 import {EventFormDataService} from "../../services/event-form-data.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-create-event-shopping-list',
@@ -29,7 +30,10 @@ export class CreateEventShoppingListPage {
   ];
   totalPrice: number = 0;
 
-  constructor(private eventFormDataService: EventFormDataService) {  }
+  constructor(
+    private eventFormDataService: EventFormDataService,
+    private router: Router
+  ) {  }
 
   addItem() {
     this.shoppingListItems.push({ name: '', price: 0 });
@@ -49,6 +53,8 @@ export class CreateEventShoppingListPage {
       this.eventFormDataService.setData('splitCostsEnabled', this.splitCostsComponent.splitCostsEnabled);
       this.eventFormDataService.setData('entryPrice', this.splitCostsComponent.entryPrice);
     }
+
+    this.router.navigate(['/create-event-participants']);
     console.log(this.eventFormDataService.getData());
   }
 }
