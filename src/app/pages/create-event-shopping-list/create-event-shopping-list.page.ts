@@ -9,6 +9,7 @@ import {TotalPriceComponent} from "../../components/total-price/total-price.comp
 import {
   SplitCostsAutomaticallyComponent
 } from "../../components/split-costs-automatically/split-costs-automatically.component";
+import {EventFormDataService} from "../../services/event-form-data.service";
 
 @Component({
   selector: 'app-create-event-shopping-list',
@@ -28,9 +29,7 @@ export class CreateEventShoppingListPage {
   ];
   totalPrice: number = 0;
 
-  constructor() {
-
-  }
+  constructor(private eventFormDataService: EventFormDataService) {  }
 
   addItem() {
     this.shoppingListItems.push({ name: '', price: 0 });
@@ -43,12 +42,13 @@ export class CreateEventShoppingListPage {
   }
 
   goToNextPage() {
-    console.log(this.shoppingListItems);
-    console.log("Total price: " + this.totalPrice);
+    this.eventFormDataService.setData('shoppingList', this.shoppingListItems);
+    this.eventFormDataService.setData('totalPrice', this.totalPrice);
 
     if (this.splitCostsComponent) {
-      console.log("Split costs enabled:", this.splitCostsComponent.splitCostsEnabled);
-      console.log("Entry price:", this.splitCostsComponent.entryPrice);
+      this.eventFormDataService.setData('splitCostsEnabled', this.splitCostsComponent.splitCostsEnabled);
+      this.eventFormDataService.setData('entryPrice', this.splitCostsComponent.entryPrice);
     }
+    console.log(this.eventFormDataService.getData());
   }
 }

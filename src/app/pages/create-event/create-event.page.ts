@@ -15,6 +15,7 @@ import {EventPrivacySelectComponent} from "../../components/event-privacy-select
 import {EventFormDataService} from "../../services/event-form-data.service";
 import {Router} from "@angular/router";
 import {FooterComponent} from "../../components/footer/footer.component";
+import {generateUUID} from "../../services/utils";
 
 @Component({
   selector: 'app-create-event',
@@ -27,7 +28,7 @@ export class CreateEventPage {
   form = new FormGroup({
     title: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
-    categories: new FormControl(''),
+    categories: new FormControl([]),
     location: new FormControl('', [Validators.required]),
     date: new FormControl('', [Validators.required]),
     hour: new FormControl('', [Validators.required]),
@@ -40,13 +41,14 @@ export class CreateEventPage {
   ) { }
 
   goToNextPage() {
-    this.eventFormDataService.setData('title', this.form.controls.title.value);
-    this.eventFormDataService.setData('description', this.form.controls.description.value);
-    this.eventFormDataService.setData('categories', this.form.controls.categories.value);
-    this.eventFormDataService.setData('location', this.form.controls.location.value);
-    this.eventFormDataService.setData('date', this.form.controls.date.value);
-    this.eventFormDataService.setData('hour', this.form.controls.hour.value);
-    this.eventFormDataService.setData('privacy', this.form.controls.privacy.value);
+    this.eventFormDataService.setData('uuid', generateUUID())
+    this.eventFormDataService.setData('title', this.form.controls.title.value ?? "");
+    this.eventFormDataService.setData('description', this.form.controls.description.value ?? "");
+    this.eventFormDataService.setData('categories', this.form.controls.categories.value ?? []);
+    this.eventFormDataService.setData('location', this.form.controls.location.value ?? "");
+    this.eventFormDataService.setData('date', this.form.controls.date.value ?? "");
+    this.eventFormDataService.setData('hour', this.form.controls.hour.value ?? "");
+    this.eventFormDataService.setData('privacy', this.form.controls.privacy.value ?? "");
 
     this.router.navigate(['/create-event-shopping-list']);
     console.log(this.eventFormDataService.getData());

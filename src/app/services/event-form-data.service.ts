@@ -5,6 +5,7 @@ import {Injectable} from "@angular/core";
 })
 export class EventFormDataService {
   private eventData = {
+    uuid: '',
     title: '',
     description: '',
     categories: [] as string[],
@@ -12,15 +13,18 @@ export class EventFormDataService {
     date: '',
     hour: '',
     privacy: '',
-    shoppingList: [] as { name: string; quantity: string }[],
+    shoppingList: [] as { name: string; price: number }[],
+    totalPrice: 0,
     maxParticipants: '',
     participants: [] as string[],
-    images: [] as (File | string)[]
+    images: [] as (File | string)[],
+    splitCostsEnabled: true,
+    entryPrice: 0
   };
 
   constructor() {}
 
-  setData(key: keyof typeof this.eventData, value: any) {
+  setData<K extends keyof typeof this.eventData>(key: K, value: typeof this.eventData[K]) {
     this.eventData[key] = value;
   }
 
@@ -53,6 +57,7 @@ export class EventFormDataService {
 
   clearEventData() {
     this.eventData = {
+      uuid: '',
       title: '',
       description: '',
       categories: [],
@@ -61,9 +66,12 @@ export class EventFormDataService {
       hour: '',
       privacy: '',
       shoppingList: [],
+      totalPrice: 0,
       maxParticipants: '',
       participants: [],
-      images: []
+      images: [],
+      splitCostsEnabled: true,
+      entryPrice: 0
     };
   }
 
