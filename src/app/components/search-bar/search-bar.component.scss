@@ -1,0 +1,32 @@
+ion-item {
+  --inner-border-width: 0px;
+  margin-top: 10px;
+
+  ion-input {
+    background-color: #F4F4F4;
+    width: 350px;
+    height: 50px;
+    border: 1px solid #3BADEC;
+    border-radius: 25px;
+    font-size: 18px;
+    font-family: 'Inter', sans-serif;
+    color: #000000;
+
+    &::placeholder {
+      font-size: 18px;
+      font-family: 'Inter', sans-serif;
+      color: #575757;
+      padding-left: 17px;
+    }
+  }
+
+  .search-image {
+    width: 31px;
+    height: auto;
+    margin-right: 15px;
+  }
+}
+
+:host ::ng-deep .native-input.sc-ion-input-md {
+  padding-left: 17px;
+}

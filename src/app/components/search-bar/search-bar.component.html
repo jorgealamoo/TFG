@@ -1,0 +1,17 @@
+<ion-item class="search-bar">
+  <ion-input
+    type="text"
+    placeholder="Search..."
+    class="search-input"
+    [(ngModel)]="searchText"
+    (keyup.enter)="onSearch()"
+  >
+    <img
+      src="assets/images/search.png"
+      alt="Search"
+      class="search-image"
+      (click)="onSearch()"
+      slot="end"
+    >
+  </ion-input>
+</ion-item>
