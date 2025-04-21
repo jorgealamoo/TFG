@@ -4,11 +4,42 @@
   justify-content: center;
   margin-top: 25px;
 
+  ion-checkbox {
+    --checkbox-background-checked: #3BADEC;
+  }
+
+  ion-checkbox::part(container) {
+    border: 2px solid #3BADEC;
+  }
+
   h2 {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
     font-size: 18px;
     color: #000000;
-    margin: 2px 0 0 15px;
+    margin: 2px 3px 0 15px;
+  }
+
+  ion-item {
+    --inner-border-width: 0px;
+
+    ion-input {
+      background-color: #F4F4F4;
+      width: 60px;
+      height: 40px;
+      border: 1px solid #3BADEC;
+      border-radius: 10px;
+      font-size: 18px;
+      font-family: 'Inter', sans-serif;
+      color: #000000;
+      text-align: center;
+
+      &::placeholder {
+        font-size: 18px;
+        font-family: 'Inter', sans-serif;
+        color: #575757;
+      }
+    }
   }
 }
+

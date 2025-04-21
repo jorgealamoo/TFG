@@ -10,7 +10,7 @@ import {MaxParticipantsComponent} from "../../components/max-participants/max-pa
   templateUrl: './create-event-participants.page.html',
   styleUrls: ['./create-event-participants.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, HeaderComponent, MaxParticipantsComponent]
+  imports: [IonContent, CommonModule, FormsModule, HeaderComponent, MaxParticipantsComponent]
 })
 export class CreateEventParticipantsPage implements OnInit {
 
