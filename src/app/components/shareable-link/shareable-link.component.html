@@ -1,0 +1,16 @@
+<ion-item class="shareable-link">
+  <ion-input
+    type="text"
+    placeholder="Shareable link"
+    class="shareable-link-input"
+    [(ngModel)]="shareableLink"
+  >
+    <img
+      src="assets/images/copy.png"
+      alt="Copy"
+      class="copy-image"
+      (click)="copyLink()"
+      slot="end"
+    >
+  </ion-input>
+</ion-item>
