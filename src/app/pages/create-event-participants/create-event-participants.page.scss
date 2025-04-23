@@ -12,3 +12,16 @@ app-search-bar {
   align-items: center;
   justify-content: center;
 }
+
+.select-users {
+  height: 50vh;
+  overflow-y: auto;
+  margin-top: 15px;
+  margin-bottom: 20px;
+
+  app-select-user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

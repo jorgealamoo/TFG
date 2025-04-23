@@ -1,0 +1,33 @@
+.select-user {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  min-width: 180px;
+  max-width: 350px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #3BADEC;
+
+  img {
+    height: 40px;
+    width: 40px;
+  }
+
+  h3 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: #000000;
+    margin-left: 15px;
+  }
+
+  ion-checkbox {
+    --checkbox-background-checked: #3BADEC;
+    margin-left: 150px;
+  }
+
+  ion-checkbox::part(container) {
+    border: 2px solid #3BADEC;
+  }
+}
+
