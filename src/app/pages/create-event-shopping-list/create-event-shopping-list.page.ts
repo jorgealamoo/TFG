@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {HeaderComponent} from "../../components/header/header.component";
@@ -19,7 +19,7 @@ import {Router} from "@angular/router";
   standalone: true,
   imports: [CommonModule, FormsModule, HeaderComponent, IonContent, IonText, ItemNameComponent, ItemPriceComponent, TotalPriceComponent, SplitCostsAutomaticallyComponent]
 })
-export class CreateEventShoppingListPage {
+export class CreateEventShoppingListPage implements OnInit {
   @ViewChild(SplitCostsAutomaticallyComponent)
   splitCostsComponent!: SplitCostsAutomaticallyComponent;
 
@@ -34,6 +34,13 @@ export class CreateEventShoppingListPage {
     private eventFormDataService: EventFormDataService,
     private router: Router
   ) {  }
+
+  ngOnInit() {
+    const eventData = this.eventFormDataService.getData();
+    if (!eventData.uuid) {
+      this.router.navigate(['/create-event']);
+    }
+  }
 
   addItem() {
     this.shoppingListItems.push({ name: '', price: 0 });
