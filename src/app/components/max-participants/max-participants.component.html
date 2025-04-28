@@ -1,6 +1,7 @@
 <div class="max-participants">
   <ion-checkbox
     [(ngModel)]="maxParticipantsEnabled"
+    (ngModelChange)="onMaxParticipantsEnabledChange($event)"
   ></ion-checkbox>
 
   <h2>Max participants:</h2>
@@ -12,6 +13,7 @@
       placeholder="0"
       class="max-participants-input"
       [(ngModel)]="maxParticipants"
+      (ngModelChange)="onMaxParticipantsChange($event)"
       [disabled]="!maxParticipantsEnabled"
     ></ion-input>
   </ion-item>

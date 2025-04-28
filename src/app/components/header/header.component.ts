@@ -23,6 +23,7 @@ export class HeaderComponent {
   @Input() showCheck: boolean = false;
 
   @Output() nextClicked = new EventEmitter<void>();
+  @Output() checkClicked = new EventEmitter<void>();
 
   constructor() { }
 
@@ -35,7 +36,7 @@ export class HeaderComponent {
   }
 
   onCheck() {
-    console.log('Check clicked');
+    this.checkClicked.emit();
   }
 
 }
