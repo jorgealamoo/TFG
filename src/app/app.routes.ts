@@ -30,5 +30,21 @@ export const routes: Routes = [
   {
     path: 'create-event-participants',
     loadComponent: () => import('./pages/create-event-participants/create-event-participants.page').then( m => m.CreateEventParticipantsPage)
+  },
+  {
+    path: 'event',
+    loadComponent: () => import('./pages/event/event.page').then( m => m.EventPage)
+  },
+  {
+    path: 'my-events',
+    loadComponent: () => import('./pages/my-events/my-events.page').then( m => m.MyEventsPage)
+  },
+  {
+    path: 'search',
+    loadComponent: () => import('./pages/search/search.page').then( m => m.SearchPage)
+  },
+  {
+    path: 'my-profile',
+    loadComponent: () => import('./pages/my-profile/my-profile.page').then( m => m.MyProfilePage)
   }
 ];

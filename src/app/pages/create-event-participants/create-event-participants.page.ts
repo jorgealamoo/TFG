@@ -45,6 +45,7 @@ export class CreateEventParticipantsPage implements OnInit {
     }
 
     this.supabaseService.createEvent(this.eventFormDataService.getData())
+    this.router.navigate(['/event'])
     console.log(this.eventFormDataService.getData());
   }
 }
