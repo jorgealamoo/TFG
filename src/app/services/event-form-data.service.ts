@@ -6,6 +6,7 @@ import {Injectable} from "@angular/core";
 export class EventFormDataService {
   private eventData = {
     uuid: '',
+    creatorUser: '',
     title: '',
     description: '',
     categories: [] as string[],
@@ -59,6 +60,7 @@ export class EventFormDataService {
   clearEventData() {
     this.eventData = {
       uuid: '',
+      creatorUser: '',
       title: '',
       description: '',
       categories: [],

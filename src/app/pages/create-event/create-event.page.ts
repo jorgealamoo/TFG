@@ -16,6 +16,7 @@ import {EventFormDataService} from "../../services/event-form-data.service";
 import {Router} from "@angular/router";
 import {FooterComponent} from "../../components/footer/footer.component";
 import {generateUUID} from "../../services/utils";
+import {SupabaseService} from "../../services/supabase.service";
 
 @Component({
   selector: 'app-create-event',
@@ -37,10 +38,11 @@ export class CreateEventPage {
 
   constructor(
     private eventFormDataService: EventFormDataService,
+    private supabaseService: SupabaseService,
     private router: Router
   ) { }
 
-  goToNextPage() {
+  async goToNextPage() {
     this.eventFormDataService.setData('uuid', generateUUID())
     this.eventFormDataService.setData('title', this.form.controls.title.value ?? "");
     this.eventFormDataService.setData('description', this.form.controls.description.value ?? "");
@@ -49,6 +51,13 @@ export class CreateEventPage {
     this.eventFormDataService.setData('date', this.form.controls.date.value ?? "");
     this.eventFormDataService.setData('hour', this.form.controls.hour.value ?? "");
     this.eventFormDataService.setData('privacy', this.form.controls.privacy.value ?? "");
+
+    const userId = await this.supabaseService.getUserId();
+    if (userId) {
+      this.eventFormDataService.setData('creatorUser', userId);
+    } else {
+      console.error('No user ID found!');
+    }
 
     this.router.navigate(['/create-event-shopping-list']);
     console.log(this.eventFormDataService.getData());

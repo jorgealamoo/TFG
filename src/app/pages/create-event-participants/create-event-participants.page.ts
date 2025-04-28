@@ -8,6 +8,7 @@ import {SearchBarComponent} from "../../components/search-bar/search-bar.compone
 import {SelectUserComponent} from "../../components/select-user/select-user.component";
 import {ShareableLinkComponent} from "../../components/shareable-link/shareable-link.component";
 import {EventFormDataService} from "../../services/event-form-data.service";
+import {SupabaseService} from "../../services/supabase.service";
 
 @Component({
   selector: 'app-create-event-participants',
@@ -21,7 +22,8 @@ export class CreateEventParticipantsPage {
   maxParticipantsEnabled: boolean = true;
 
   constructor(
-    private eventFormDataService: EventFormDataService
+    private eventFormDataService: EventFormDataService,
+    private supabaseService: SupabaseService
   ) { }
 
   finalizeEventCreation() {
@@ -33,6 +35,7 @@ export class CreateEventParticipantsPage {
       this.eventFormDataService.setData("maxParticipantsEnabled", false);
     }
 
+    this.supabaseService.createEvent(this.eventFormDataService.getData())
     console.log(this.eventFormDataService.getData());
   }
 }

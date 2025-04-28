@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment';
 import {Router} from "@angular/router";
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -33,7 +34,7 @@ export class SupabaseService {
       }
 
       if (data?.user) {
-        await this.updateUsername(data.user.id, credentials.username); // Call the function to update username
+        await this.updateUsername(data.user.id, credentials.username);
         resolve(data);
       } else {
         reject('User not found after sign-up');
@@ -73,7 +74,77 @@ export class SupabaseService {
     }
   }
 
-  getTodos() {
-    return this.supabase.from('todos').select('*');
+  async getUserId(): Promise<string | null> {
+    try {
+      const { data, error } = await this.supabase.auth.getUser();
+      if (error) {
+        console.error('Error getting user ID:', error);
+        return null;
+      }
+      return data.user?.id ?? null;
+    } catch (err) {
+      console.error('Unexpected error getting user ID:', err);
+      return null;
+    }
+  }
+
+  async createEvent(eventData: {
+    uuid: string;
+    title: string;
+    description: string;
+    categories: string[];
+    location: string;
+    date: string;
+    hour: string;
+    privacy: string;
+    shoppingList: { name: string; price: number }[];
+    totalPrice: number;
+    maxParticipants: number;
+    maxParticipantsEnabled: boolean;
+    participants: string[];
+    images: (File | string)[];
+    splitCostsEnabled: boolean;
+    entryPrice: number;
+    creatorUser: string;
+  }) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const uuid = eventData.uuid || uuidv4();
+
+        const { data, error } = await this.supabase
+          .from('events')
+          .insert([
+            {
+              id: uuid,
+              title: eventData.title,
+              description: eventData.description,
+              categories: eventData.categories,
+              location: eventData.location,
+              date: eventData.date,
+              hour: eventData.hour,
+              privacy: eventData.privacy,
+              shopping_list: eventData.shoppingList,
+              total_price: eventData.totalPrice,
+              max_participants: eventData.maxParticipants,
+              max_participants_enabled: eventData.maxParticipantsEnabled,
+              participants: eventData.participants,
+              images: eventData.images.map(img => typeof img === 'string' ? img : ''), // IMPORTANTE: Falta implementar la subida de imágenes
+              split_costs_enabled: eventData.splitCostsEnabled,
+              entry_price: eventData.entryPrice,
+              creator_user: eventData.creatorUser
+            }
+          ]);
+
+        if (error) {
+          console.error('Error creating event:', error);
+          reject(error);
+        } else {
+          resolve(data);
+        }
+      } catch (err) {
+        console.error('Unexpected error creating event:', err);
+        reject(err);
+      }
+    });
   }
 }
