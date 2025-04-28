@@ -44,7 +44,11 @@ export class EventImagesInputComponent implements OnInit {
         const file = files[i];
 
         if (file.type.startsWith('image/')) {
-          validImages.push(file);
+          const timestamp = Date.now();
+          const uniqueName = `${timestamp}_${file.name}`;
+          const renamedFile = new File([file], uniqueName, { type: file.type });
+
+          validImages.push(renamedFile);
         } else {
           await showAlert(this.alertController, "Invalid File", "You must select an image file.")
         }
