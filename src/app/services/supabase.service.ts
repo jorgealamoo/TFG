@@ -186,4 +186,25 @@ export class SupabaseService {
       .getPublicUrl(path);
     return data.publicUrl;
   }
+
+  async getEventById(id: string) {
+    try {
+      const { data, error } = await this.supabase
+        .from('events')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (error) {
+        console.error('Error fetching event by ID:', error);
+        throw error;
+      }
+
+      return data;
+    } catch (err) {
+      console.error('Unexpected error fetching event:', err);
+      throw err;
+    }
+  }
+
 }
