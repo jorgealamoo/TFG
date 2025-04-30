@@ -88,6 +88,36 @@ export class SupabaseService {
     }
   }
 
+  async uploadEventImages(eventUuid: string, images: (File | string)[]): Promise<string[]> {
+    const uploadedPaths: string[] = [];
+
+    for (const image of images) {
+      if (typeof image === 'string') {
+        uploadedPaths.push(image);
+        continue;
+      }
+
+      const fileName = image.name;
+      const filePath = `${eventUuid}-images/${fileName}`;
+
+      const { error } = await this.supabase.storage
+        .from('event-images')
+        .upload(filePath, image, {
+          cacheControl: '3600',
+          upsert: false,
+        });
+
+      if (error) {
+        console.error(`Error uploading image ${fileName}`, error);
+        continue;
+      }
+
+      uploadedPaths.push(filePath);
+    }
+
+    return uploadedPaths;
+  }
+
   async createEvent(eventData: {
     uuid: string;
     title: string;
@@ -111,6 +141,8 @@ export class SupabaseService {
       try {
         const uuid = eventData.uuid || uuidv4();
 
+        const imagePaths = await this.uploadEventImages(uuid, eventData.images);
+
         const { data, error } = await this.supabase
           .from('events')
           .insert([
@@ -128,7 +160,7 @@ export class SupabaseService {
               max_participants: eventData.maxParticipants,
               max_participants_enabled: eventData.maxParticipantsEnabled,
               participants: eventData.participants,
-              images: eventData.images.map(img => typeof img === 'string' ? img : ''), // IMPORTANTE: Falta implementar la subida de imágenes
+              images: imagePaths,
               split_costs_enabled: eventData.splitCostsEnabled,
               entry_price: eventData.entryPrice,
               creator_user: eventData.creatorUser
@@ -146,5 +178,12 @@ export class SupabaseService {
         reject(err);
       }
     });
+  }
+
+  getEventImageUrl(path: string): string {
+    const { data } = this.supabase.storage
+      .from('event-images')
+      .getPublicUrl(path);
+    return data.publicUrl;
   }
 }

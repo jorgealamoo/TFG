@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" class="back-button">
+        <img ngSrc="assets/images/arrow_back.png" alt="Back" height="96" width="96">
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>{{ title }}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button *ngIf="showShare" (click)="onShare()">
+        <img ngSrc="assets/images/share.png" alt="Check" height="28" width="28">
+      </ion-button>
+      <ion-button *ngIf="showSettings" (click)="onSettings()">
+        <img ngSrc="assets/images/settings.png" height="28" width="28" alt="Settings">
+      </ion-button>
+      <ion-button (click)="onGallery()">
+        <img ngSrc="assets/images/gallery.png" height="28" width="28" alt="Gallery">
+      </ion-button>
+      <ion-button (click)="onChat()">
+        <img ngSrc="assets/images/chat_bubble.png" height="28" width="28" alt="Chat">
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
