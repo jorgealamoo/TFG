@@ -6,13 +6,14 @@ import {SupabaseService} from "../../services/supabase.service";
 import {ActivatedRoute} from "@angular/router";
 import {IonAvatar, IonContent} from "@ionic/angular/standalone";
 import {EventImageCarouselComponent} from "../../components/event-image-carousel/event-image-carousel.component";
+import {EventFooterComponent} from "../../components/event-footer/event-footer.component";
 
 @Component({
   selector: 'app-event',
   templateUrl: './event.page.html',
   styleUrls: ['./event.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, EventHeaderComponent, IonContent, EventImageCarouselComponent, IonAvatar, NgOptimizedImage]
+  imports: [CommonModule, FormsModule, EventHeaderComponent, IonContent, EventImageCarouselComponent, IonAvatar, NgOptimizedImage, EventFooterComponent]
 })
 export class EventPage implements OnInit {
   public event: any;
@@ -50,6 +51,4 @@ export class EventPage implements OnInit {
     if (!this.event?.hour) return null;
     return this.event.hour.slice(0, 5);
   }
-
-
 }

@@ -1,0 +1,24 @@
+<ion-footer>
+  <ion-toolbar class="event-footer-toolbar">
+    <div class="footer-container">
+      <div class="footer-left" (click)="goToMoreInfo()">
+        <img class="info-logo" ngSrc="assets/images/info.png" height="24" width="24" alt="Information icon">
+        <span>More info</span>
+        <img ngSrc="assets/images/arrow_forward.png" height="24" width="24" alt="Arrow forward icon">
+      </div>
+
+      <div class="footer-right">
+        <ng-container *ngIf="!joined; else joinedTemplate">
+          <ion-button (click)="joinEvent()">Join Event</ion-button>
+        </ng-container>
+
+        <ng-template #joinedTemplate>
+          <div class="joined-info">
+            <span class="joined-text">Joined!</span>
+            <span class="price-due">{{ due }}€ due</span>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-footer>

@@ -1,0 +1,66 @@
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  width: 100%;
+  height: 80px;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  color: black;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+
+  .info-logo {
+    margin-right: 6px;
+  }
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+
+  ion-button::part(native) {
+    width: 170px;
+    height: 45px;
+    background-color: #3BADEC;
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    border-radius: 30px;
+    text-transform: none;
+    box-shadow: none;
+
+    &:hover {
+      background-color: #3BADEC;
+      color: #ffffff;
+    }
+  }
+
+  .joined-info {
+    margin-right: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .joined-text {
+      font-family: 'Inter', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      color: #3BADEC;
+    }
+
+    .price-due {
+      color: black;
+      font-family: 'Inter', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+    }
+  }
+}
