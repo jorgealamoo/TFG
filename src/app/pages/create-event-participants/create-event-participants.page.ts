@@ -44,8 +44,9 @@ export class CreateEventParticipantsPage implements OnInit {
       this.eventFormDataService.setData("maxParticipantsEnabled", false);
     }
 
-    this.supabaseService.createEvent(this.eventFormDataService.getData())
-    this.router.navigate(['/event'])
+    const eventData = this.eventFormDataService.getData();
+    this.supabaseService.createEvent(eventData)
+    this.router.navigate(['/event${eventData.uuid}']);
     console.log(this.eventFormDataService.getData());
   }
 }

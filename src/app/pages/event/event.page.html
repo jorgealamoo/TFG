@@ -4,4 +4,25 @@
 
 <ion-content>
   <app-event-image-carousel [imageUrls]="imageUrls"></app-event-image-carousel>
+
+  <div class="event-details">
+    <p class="event-title">{{ event?.title }}</p>
+
+    <div class="creator-user">
+      <ion-avatar slot="start">
+        <img *ngIf="creatorProfileImageUrl" [src]="creatorProfileImageUrl" alt="Creator Profile" class="profile-img">
+      </ion-avatar>
+      <p class="creator-name">{{ creatorUsername }}</p>
+    </div>
+
+    <div class="event-location">
+      <img ngSrc="assets/images/location.png" height="24" width="24" alt="location icon">
+      <p class="location-name">{{ event?.location }}</p>
+    </div>
+
+    <div class="event-date">
+      <img ngSrc="assets/images/calendar_clock.png" height="24" width="24" alt="calendar icon">
+      <p class="date-name">{{ event?.date | date: 'dd/MM/yyyy' }} · {{ formattedHour }}</p>
+    </div>
+  </div>
 </ion-content>

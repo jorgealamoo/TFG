@@ -1,0 +1,47 @@
+p {
+  margin: 0;
+}
+
+.event-details {
+  margin: 15px;
+  border-bottom: 0.5px solid #3BADEC;
+  padding-bottom: 10px;
+
+  .event-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    color: black;
+    font-size: 24px;
+  }
+
+  .creator-user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: #3B82F6;
+    font-size: 18px;
+    margin-top: 10px;
+
+    ion-avatar {
+      height: 26px;
+      width: 26px;
+      img {
+        height: 26px;
+        width: auto;
+      }
+    }
+  }
+
+  .event-location, .event-date {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: black;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+}

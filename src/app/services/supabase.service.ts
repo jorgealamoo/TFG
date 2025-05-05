@@ -88,6 +88,47 @@ export class SupabaseService {
     }
   }
 
+  async getUsernameById(userId: string): Promise<string | null> {
+    try {
+      const { data, error } = await this.supabase
+        .from('users')
+        .select('username')
+        .eq('id', userId)
+        .single();
+
+      if (error) {
+        console.error('Error fetching username:', error);
+        return null;
+      }
+
+      return data.username ?? null;
+    } catch (err) {
+      console.error('Unexpected error fetching username:', err);
+      return null;
+    }
+  }
+
+  async getUserProfileImage(userId: string): Promise<string | null> {
+    try {
+      const { data, error } = await this.supabase
+        .from('users')
+        .select('profile_image')
+        .eq('id', userId)
+        .single();
+
+      if (error) {
+        console.error('Error fetching user profile image:', error);
+        return null;
+      }
+
+      return data.profile_image || null;
+    } catch (err) {
+      console.error('Unexpected error fetching user profile image:', err);
+      return null;
+    }
+  }
+
+
   async uploadEventImages(eventUuid: string, images: (File | string)[]): Promise<string[]> {
     const uploadedPaths: string[] = [];
 
