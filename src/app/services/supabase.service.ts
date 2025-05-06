@@ -211,9 +211,38 @@ export class SupabaseService {
         if (error) {
           console.error('Error creating event:', error);
           reject(error);
-        } else {
-          resolve(data);
+          return;
         }
+
+        const { data: userData, error: userError } = await this.supabase
+          .from('users')
+          .select('created_events')
+          .eq('id', eventData.creatorUser)
+          .single();
+
+        if (userError) {
+          console.error('Error fetching user:', userError);
+          reject(userError);
+          return;
+        }
+
+        const updatedCreatedEvents = Array.isArray(userData.created_events)
+          ? [...new Set([...userData.created_events, uuid])]
+          : [uuid];
+
+        const { error: updateError } = await this.supabase
+          .from('users')
+          .update({ created_events: updatedCreatedEvents })
+          .eq('id', eventData.creatorUser);
+
+        if (updateError) {
+          console.error('Error updating user with created event:', updateError);
+          reject(updateError);
+          return;
+        }
+
+        resolve(data);
+
       } catch (err) {
         console.error('Unexpected error creating event:', err);
         reject(err);
