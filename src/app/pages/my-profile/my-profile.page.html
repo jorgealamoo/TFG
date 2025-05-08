@@ -1,6 +1,12 @@
 <ion-content>
   <div class="my-profile-container">
-    <app-profile-image></app-profile-image>
+    <div class="profile-info-container">
+      <app-profile-image></app-profile-image>
+      <div class="profile-info">
+        <p class="name-and-surname">{{ nameAndSurname }}</p>
+        <p class="username">{{ username }}</p>
+      </div>
+    </div>
   </div>
 
   <app-footer></app-footer>
