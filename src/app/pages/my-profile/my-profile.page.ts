@@ -4,13 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { IonContent } from '@ionic/angular/standalone';
 import {FooterComponent} from "../../components/footer/footer.component";
 import {ProfileImageComponent} from "../../components/profile-image/profile-image.component";
+import {ProfileCountersComponent} from "../../components/profile-counters/profile-counters.component";
 
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.page.html',
   styleUrls: ['./my-profile.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, FooterComponent, ProfileImageComponent]
+  imports: [IonContent, CommonModule, FormsModule, FooterComponent, ProfileImageComponent, ProfileCountersComponent]
 })
 export class MyProfilePage implements OnInit {
   nameAndSurname: string ="Name Surname super long ufbierybfouybuyfwerou";

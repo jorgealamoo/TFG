@@ -1,0 +1,34 @@
+.profile-counters-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  p {
+    margin: 0;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+    color: black;
+    font-weight: Bold;
+  }
+
+  .profile-posts-counter,
+  .profile-followers-counter,
+  .profile-following-counter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 15px;
+  }
+
+  .profile-followers-counter {
+    border-right: 1px solid #3BADEC;
+    border-left: 1px solid #3BADEC;
+  }
+
+  .profile-counter-description {
+    font-weight: 500;
+    color: #3B82F6;
+  }
+
+}
