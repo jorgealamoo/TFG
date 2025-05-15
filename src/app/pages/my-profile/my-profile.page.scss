@@ -1,6 +1,17 @@
 .my-profile-container {
   position: relative;
   z-index: 1;
+  overflow-y: auto;
+  margin-bottom: 65px;
+}
+
+app-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  z-index: 10;
 }
 
 .profile-info-container {

@@ -13,4 +13,5 @@ import {NgForOf} from "@angular/common";
 })
 export class EventImageCarouselComponent {
   @Input() imageUrls: string[] = [];
+  @Input() isEventPost: boolean = false;
 }
