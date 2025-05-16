@@ -1,29 +1,29 @@
 <div class="event-post-container">
   <div class="event-post-header">
     <div class="event-post-header-left">
-      <img [src]="profileImage" alt="Profile image"/>
+      <img [src]="event.profileImage ?? 'assets/images/default_profile_image.png'" alt="Profile image"/>
       <div class="event-post-header-info">
-        <p class="event-post-username">{{ creatorUsername }}</p>
-        <p class="event-post-name">{{ eventName }}</p>
+        <p class="event-post-username">{{ event.creatorUsername }}</p>
+        <p class="event-post-name">{{ event.title }}</p>
       </div>
     </div>
     <img ngSrc="assets/images/more_vertical.png" alt="More options" height="24" width="24" (click)="openMoreOptions()">
   </div>
 
   <div class="event-post-image">
-    <app-event-image-carousel [imageUrls]="eventImagesUrls" [isEventPost]="true"></app-event-image-carousel>
+    <app-event-image-carousel [imageUrls]="imagesUrls" [isEventPost]="true"></app-event-image-carousel>
   </div>
 
   <div class="event-post-footer">
     <img ngSrc="assets/images/location.png" alt="Location icon" height="24" width="24">
     <span>
-      {{ eventLocation }}
-      &nbsp; · &nbsp; {{ eventDate }}
-      &nbsp; · &nbsp; {{ eventHour }}
+      {{ event.location }}
+      &nbsp; · &nbsp; {{ event.date | date: 'dd/MM/yyyy' }}
+      &nbsp; · &nbsp; {{ event.hour }}
     </span>
   </div>
 
   <div class="event-post-description" *ngIf="descriptionEnabled">
-    <p>{{ eventDescription }}</p>
+    <p>{{ event.description }}</p>
   </div>
 </div>

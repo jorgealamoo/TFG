@@ -1,9 +1,8 @@
-
-import { Injectable } from '@angular/core';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { environment } from '../../environments/environment';
+import {Injectable} from '@angular/core';
+import {createClient, SupabaseClient} from '@supabase/supabase-js';
+import {environment} from '../../environments/environment';
 import {Router} from "@angular/router";
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -313,6 +312,82 @@ export class SupabaseService {
     }
   }
 
+  /*
+  async getCreatedEventsByUserId(userId: string): Promise<any[]> {
+    try {
+      const { data: userData, error: userError } = await this.supabase
+        .from('users')
+        .select('created_events')
+        .eq('id', userId)
+        .single();
+
+      if (userError) {
+        console.error('Error fetching created_events from user:', userError);
+        return [];
+      }
+
+      const createdEventIds: string[] = userData?.created_events ?? [];
+
+      if (!createdEventIds.length) {
+        return [];
+      }
+
+      const { data: eventsData, error: eventsError } = await this.supabase
+        .from('events')
+        .select('*')
+        .in('id', createdEventIds)
+        .order('date', { ascending: false });
+
+      if (eventsError) {
+        console.error('Error fetching events by UUID list:', eventsError);
+        return [];
+      }
+
+      return eventsData;
+    } catch (err) {
+      console.error('Unexpected error in getCreatedEventsByUserId:', err);
+      return [];
+    }
+  }
+  */
+  async getCreatedEventsByUserId(userId: string): Promise<any[]> {
+    try {
+      const { data: userData, error: userError } = await this.supabase
+        .from('users')
+        .select('created_events, username, profile_image')
+        .eq('id', userId)
+        .single();
+
+      if (userError || !userData) {
+        console.error('Error fetching user data:', userError);
+        return [];
+      }
+
+      const eventIds = userData.created_events;
+      if (!eventIds || eventIds.length === 0) return [];
+
+      const { data: events, error: eventsError } = await this.supabase
+        .from('events')
+        .select('*')
+        .in('id', eventIds)
+        .order('date', { ascending: false });
+
+      if (eventsError || !events) {
+        console.error('Error fetching events:', eventsError);
+        return [];
+      }
+
+      return events.map(event => ({
+        ...event,
+        imageUrls: event.images ?? [],
+        creatorUsername: userData.username,
+        profileImage: userData.profile_image,
+      }));
+    } catch (err) {
+      console.error('Unexpected error fetching enriched events:', err);
+      return [];
+    }
+  }
 
 
 }

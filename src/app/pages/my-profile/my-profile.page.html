@@ -1,7 +1,7 @@
 <ion-content>
   <div class="my-profile-container">
     <div class="profile-info-container">
-      <app-profile-image [imageUrl]="profileImage ?? 'assets/default-profile-image.png'"></app-profile-image>
+      <app-profile-image [imageUrl]="profileImage ?? 'assets/images/default_profile_image.png'"></app-profile-image>
 
       <div class="profile-info">
         <p class="name-and-surname">{{ nameAndSurname }}</p>
@@ -15,9 +15,7 @@
       [followingNumber]="followingCount"
     ></app-profile-counters>
 
-    <app-event-post></app-event-post>
-    <app-event-post></app-event-post>
-    <app-event-post></app-event-post>
+    <app-event-post *ngFor="let event of userEvents" [event]="event"></app-event-post>
   </div>
 
   <app-footer></app-footer>

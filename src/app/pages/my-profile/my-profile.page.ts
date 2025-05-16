@@ -22,6 +22,7 @@ export class MyProfilePage implements OnInit {
   createdEventsCount: number = 0;
   followersCount: number = 0;
   followingCount: number = 0;
+  userEvents: any[] = [];
 
   constructor(private supabaseService: SupabaseService) { }
 
@@ -38,11 +39,15 @@ export class MyProfilePage implements OnInit {
       return;
     }
 
-    this.username = profileData.username;
-    this.nameAndSurname = `${profileData.name} ${profileData.surname}`;
-    this.profileImage = profileData.profile_image;
-    this.createdEventsCount = profileData.createdEventsCount;
-    this.followersCount = profileData.followersCount;
-    this.followingCount = profileData.followingCount;
+    if (userId) {
+      this.username = profileData.username;
+      this.nameAndSurname = `${profileData.name} ${profileData.surname}`;
+      this.profileImage = profileData.profile_image;
+      this.createdEventsCount = profileData.createdEventsCount;
+      this.followersCount = profileData.followersCount;
+      this.followingCount = profileData.followingCount;
+      this.userEvents = await this.supabaseService.getCreatedEventsByUserId(userId);
+      console.log('User events:', this.userEvents);
+    }
   }
 }
