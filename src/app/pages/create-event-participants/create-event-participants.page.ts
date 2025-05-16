@@ -46,7 +46,7 @@ export class CreateEventParticipantsPage implements OnInit {
 
     const eventData = this.eventFormDataService.getData();
     this.supabaseService.createEvent(eventData)
-    this.router.navigate([`/event/${eventData.uuid}`]);
+    this.router.navigate([`/my-profile`]);
     console.log(this.eventFormDataService.getData());
   }
 }
