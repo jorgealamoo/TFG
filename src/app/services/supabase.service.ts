@@ -277,4 +277,42 @@ export class SupabaseService {
     }
   }
 
+  async getUserProfileData(userId: string): Promise<{
+    username: string;
+    name: string;
+    surname: string;
+    profile_image: string | null;
+    followersCount: number;
+    followingCount: number;
+    createdEventsCount: number;
+  } | null> {
+    try {
+      const { data, error } = await this.supabase
+        .from('users')
+        .select('username, name, surname, profile_image, followers, following, created_events')
+        .eq('id', userId)
+        .single();
+
+      if (error) {
+        console.error('Error fetching user profile data:', error);
+        return null;
+      }
+
+      return {
+        username: data.username,
+        name: data.name,
+        surname: data.surname,
+        profile_image: data.profile_image ?? null,
+        followersCount: Array.isArray(data.followers) ? data.followers.length : 0,
+        followingCount: Array.isArray(data.following) ? data.following.length : 0,
+        createdEventsCount: Array.isArray(data.created_events) ? data.created_events.length : 0
+      };
+    } catch (err) {
+      console.error('Unexpected error fetching user profile data:', err);
+      return null;
+    }
+  }
+
+
+
 }
