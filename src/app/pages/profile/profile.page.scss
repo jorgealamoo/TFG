@@ -1,0 +1,46 @@
+.my-profile-container {
+  position: relative;
+  z-index: 1;
+  overflow-y: auto;
+  margin-bottom: 65px;
+}
+
+app-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  z-index: 10;
+}
+
+.profile-info-container {
+  display: flex;
+  align-items: center;
+  margin: 40px;
+
+  p {
+    margin: 0 0 0 15px;
+    font-family: 'Inter', sans-serif;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 226px;
+  }
+
+  app-profile-follow-button {
+    margin-left: 15px;
+  }
+
+  .name-and-surname {
+    font-weight: 600;
+    font-size: 20px;
+    color: black;
+  }
+
+  .username {
+    font-weight: 500;
+    font-size: 18px;
+    color: #3B82F6;
+  }
+}
