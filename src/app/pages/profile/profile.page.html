@@ -6,7 +6,10 @@
       <div class="profile-info">
         <p class="name-and-surname">{{ nameAndSurname }}</p>
         <p class="username">{{ username }}</p>
-        <app-profile-follow-button></app-profile-follow-button>
+        <app-profile-follow-button
+          [targetUserId]="userId"
+          (followStatusChanged)="onFollowStatusChanged($event)"
+        ></app-profile-follow-button>
       </div>
     </div>
 
