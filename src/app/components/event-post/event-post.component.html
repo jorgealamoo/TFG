@@ -1,17 +1,17 @@
-<div class="event-post-container">
+<div class="event-post-container" (click)="goToEvent()">
   <div class="event-post-header">
     <div class="event-post-header-left">
       <img
         [src]="event.profileImage ?? 'assets/images/default_profile_image.png'"
         alt="Profile image"
-        (click)="goToUserProfile()"
+        (click)="goToUserProfile($event)"
       />
       <div class="event-post-header-info">
-        <p class="event-post-username" (click)="goToUserProfile()">{{ event.creatorUsername }}</p>
+        <p class="event-post-username" (click)="goToUserProfile($event)">{{ event.creatorUsername }}</p>
         <p class="event-post-name">{{ event.title }}</p>
       </div>
     </div>
-    <img ngSrc="assets/images/more_vertical.png" alt="More options" height="24" width="24" (click)="openMoreOptions()">
+    <img ngSrc="assets/images/more_vertical.png" alt="More options" height="24" width="24" (click)="openMoreOptions($event)">
   </div>
 
   <div class="event-post-image">

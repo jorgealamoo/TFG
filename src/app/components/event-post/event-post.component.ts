@@ -26,7 +26,8 @@ export class EventPostComponent implements OnInit {
     private router: Router
     ) { }
 
-  openMoreOptions() {
+  openMoreOptions(event: MouseEvent) {
+    event.stopPropagation();
     console.log('More options opened');
   }
 
@@ -40,10 +41,18 @@ export class EventPostComponent implements OnInit {
     }
   }
 
-  goToUserProfile() {
+  goToUserProfile(event: MouseEvent) {
+    event.stopPropagation();
     const userId = this.event.creator_user;
     if (userId) {
       this.router.navigate(['/profile', userId]);
+    }
+  }
+
+  goToEvent() {
+    const eventId = this.event?.id;
+    if (eventId) {
+      this.router.navigate(['/event', eventId]);
     }
   }
 }
