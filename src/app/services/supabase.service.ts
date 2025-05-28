@@ -454,8 +454,15 @@ export class SupabaseService {
     if (userError || !userData) throw userError || new Error('User not found');
 
     const followedUserIds: string[] = userData.following || [];
-
     if (followedUserIds.length === 0) return [];
+
+    const { data: usersData, error: usersError } = await this.supabase
+      .from('users')
+      .select('id, username, profile_image')
+      .in('id', followedUserIds);
+    if (usersError) throw usersError;
+
+    const userMap = new Map(usersData.map(user => [user.id, user]));
 
     const { data: eventsData, error: eventsError } = await this.supabase
       .from('events')
@@ -465,7 +472,13 @@ export class SupabaseService {
       .range(offset, offset + limit - 1);
 
     if (eventsError) throw eventsError;
-    return eventsData;
+
+    return eventsData.map(event => ({
+      ...event,
+      creatorUsername: userMap.get(event.creator_user)?.username ?? 'Unknown',
+      profileImage: userMap.get(event.creator_user)?.profile_image ?? null,
+      imageUrls: event.images ?? []
+    }));
   }
 
 }
