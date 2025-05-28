@@ -332,7 +332,7 @@ export class SupabaseService {
         .from('events')
         .select('*')
         .in('id', eventIds)
-        .order('date', { ascending: false });
+        .order('created_at', { ascending: false });
 
       if (eventsError || !events) {
         console.error('Error fetching events:', eventsError);
@@ -442,6 +442,30 @@ export class SupabaseService {
       console.error('Error checking if user is already followed:', err);
       return false;
     }
+  }
+
+  async getEventsFromFollowedUsers(userid: string, limit: number = 10, offset: number = 0): Promise<any[]> {
+    const {data: userData, error: userError} = await this.supabase
+      .from('users')
+      .select('following')
+      .eq('id', userid)
+      .single();
+
+    if (userError || !userData) throw userError || new Error('User not found');
+
+    const followedUserIds: string[] = userData.following || [];
+
+    if (followedUserIds.length === 0) return [];
+
+    const { data: eventsData, error: eventsError } = await this.supabase
+      .from('events')
+      .select('*')
+      .in('creator_user', followedUserIds)
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limit - 1);
+
+    if (eventsError) throw eventsError;
+    return eventsData;
   }
 
 }
