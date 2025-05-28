@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {DatePipe, NgIf, NgOptimizedImage} from "@angular/common";
 import {EventImageCarouselComponent} from "../event-image-carousel/event-image-carousel.component";
 import {SupabaseService} from "../../services/supabase.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-event-post',
@@ -20,7 +21,10 @@ export class EventPostComponent implements OnInit {
 
   @Input() descriptionEnabled: boolean = true;
 
-  constructor(private supabaseService: SupabaseService) { }
+  constructor(
+    private supabaseService: SupabaseService,
+    private router: Router
+    ) { }
 
   openMoreOptions() {
     console.log('More options opened');
@@ -33,6 +37,13 @@ export class EventPostComponent implements OnInit {
           this.supabaseService.getEventImageUrl(path)
         )
       );
+    }
+  }
+
+  goToUserProfile() {
+    const userId = this.event.creator_user;
+    if (userId) {
+      this.router.navigate(['/profile', userId]);
     }
   }
 }
