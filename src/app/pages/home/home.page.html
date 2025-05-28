@@ -1,3 +1,21 @@
 <app-home-header></app-home-header>
 
-<app-footer></app-footer>
+<ion-content>
+  <div class="home-container">
+    <ng-container *ngIf="events.length > 0; else noEvents">
+      <app-event-post *ngFor="let event of events" [event]="event"></app-event-post>
+    </ng-container>
+
+    <ng-template #noEvents>
+      <p style="text-align:center; margin-top: 2rem;">No events available yet.</p>
+    </ng-template>
+
+    <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreEvents($event)">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more events...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+
+  <app-footer></app-footer>
+</ion-content>
+
