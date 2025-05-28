@@ -3,7 +3,7 @@ import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {EventHeaderComponent} from "../../components/event-header/event-header.component";
 import {SupabaseService} from "../../services/supabase.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {IonAvatar, IonContent} from "@ionic/angular/standalone";
 import {EventImageCarouselComponent} from "../../components/event-image-carousel/event-image-carousel.component";
 import {EventFooterComponent} from "../../components/event-footer/event-footer.component";
@@ -23,6 +23,7 @@ export class EventPage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private supabase: SupabaseService
   ) {
   }
@@ -50,5 +51,12 @@ export class EventPage implements OnInit {
   get formattedHour(): string | null {
     if (!this.event?.hour) return null;
     return this.event.hour.slice(0, 5);
+  }
+
+  goToUserProfile() {
+    const userId = this.event.creator_user;
+    if (userId) {
+      this.router.navigate(['/profile', userId]);
+    }
   }
 }

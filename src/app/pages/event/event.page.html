@@ -8,7 +8,7 @@
   <div class="event-details">
     <p class="event-title">{{ event?.title }}</p>
 
-    <div class="creator-user">
+    <div class="creator-user" (click)="goToUserProfile()">
       <ion-avatar slot="start">
         <img *ngIf="creatorProfileImageUrl" [src]="creatorProfileImageUrl" alt="Creator Profile" class="profile-img">
       </ion-avatar>
