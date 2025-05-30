@@ -29,4 +29,4 @@
   <p class="event-description">{{ event?.description }}</p>
 </ion-content>
 
-<app-event-footer></app-event-footer>
+<app-event-footer *ngIf="event?.id" [eventId]="event?.id"></app-event-footer>

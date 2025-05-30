@@ -481,4 +481,52 @@ export class SupabaseService {
     }));
   }
 
+  async joinEvent(userId: string, eventId: string): Promise<void> {
+    try {
+      const { data: eventData, error: eventError } = await this.supabase
+        .from('events')
+        .select('participants')
+        .eq('id', eventId)
+        .single();
+
+      if (eventError) console.error('Error getting event data:', eventError);
+
+      const updatedParticipants = Array.from(new Set([
+        ...(eventData?.participants || []),
+        userId,
+      ]));
+
+      const { error: updateEventError } = await this.supabase
+        .from('events')
+        .update({ participants: updatedParticipants })
+        .eq('id', eventId);
+
+      if (updateEventError) console.error('Error updating event participants:', updateEventError);
+
+      const { data: userData, error: userError } = await this.supabase
+        .from('users')
+        .select('joined_events')
+        .eq('id', userId)
+        .single();
+
+      if (userError) console.error('Error fetching user data:', userError);
+
+      const updatedJoinedEvents = Array.from(new Set([
+        ...(userData?.joined_events || []),
+        eventId,
+      ]));
+
+      const { error: updateUserError } = await this.supabase
+        .from('users')
+        .update({ joined_events: updatedJoinedEvents })
+        .eq('id', userId);
+
+      if (updateUserError) console.error('Error updating user joined events:', updateUserError);
+
+    } catch (err) {
+      console.error('Error joining event:', err);
+      throw err;
+    }
+  }
+
 }
