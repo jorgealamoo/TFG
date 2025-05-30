@@ -529,4 +529,120 @@ export class SupabaseService {
     }
   }
 
+  /*
+  async getJoinedEvents(
+    userId: string,
+    filter: 'all' | 'upcoming' | 'past' = 'all',
+    sortBy: 'date_desc' | 'date_asc' | 'creator' = 'date_desc',
+    limit: number = 10,
+    offset: number = 0
+  ): Promise<any[]> {
+    try {
+      let query = this.supabase
+        .from('events')
+        .select('*')
+        .contains('participants', [userId]);
+
+      const today = new Date().toISOString();
+
+      if (filter === 'upcoming') {
+        query = query.gte('created_at', today);
+      } else if (filter === 'past') {
+        query = query.lt('created_at', today);
+      }
+
+      if (sortBy === 'date_asc') {
+        query = query.order('created_at', { ascending: true });
+      } else if (sortBy === 'date_desc') {
+        query = query.order('created_at', { ascending: false });
+      } else if (sortBy === 'creator') {
+        query = query.order('creator_user', { ascending: true });
+      }
+
+      query = query.range(offset, offset + limit - 1);
+
+      const { data, error } = await query;
+
+      if (error) {
+        console.error('Error fetching joined events:', error);
+      }
+
+      return data || [];
+    } catch (err) {
+      console.error('Unexpected error fetching joined events:', err);
+      return [];
+    }
+  }
+  */
+
+  async getJoinedEvents(
+    userId: string,
+    filter: 'all' | 'upcoming' | 'past' = 'all',
+    sortBy: 'date_desc' | 'date_asc' | 'creator' = 'date_desc',
+    limit: number = 10,
+    offset: number = 0
+  ): Promise<any[]> {
+    try {
+      const { data: userData, error: userError } = await this.supabase
+        .from('users')
+        .select('joined_events')
+        .eq('id', userId)
+        .single();
+
+      if (userError || !userData) {
+        console.error('User not found');
+        return [];
+      }
+
+      const joinedEventIds: string[] = userData.joined_events || [];
+      if (joinedEventIds.length === 0) return [];
+
+      const { data: usersData, error: usersError } = await this.supabase
+        .from('users')
+        .select('id, username, profile_image');
+
+      if (usersError) throw usersError;
+      const userMap = new Map(usersData.map(user => [user.id, user]));
+
+      let query = this.supabase
+        .from('events')
+        .select('*')
+        .in('id', joinedEventIds);
+
+      const today = new Date().toISOString();
+
+      if (filter === 'upcoming') {
+        query = query.gte('created_at', today);
+      } else if (filter === 'past') {
+        query = query.lt('created_at', today);
+      }
+
+      if (sortBy === 'date_asc') {
+        query = query.order('created_at', { ascending: true });
+      } else if (sortBy === 'date_desc') {
+        query = query.order('created_at', { ascending: false });
+      } else if (sortBy === 'creator') {
+        query = query.order('creator_user', { ascending: true });
+      }
+
+      query = query.range(offset, offset + limit - 1);
+
+      const { data: eventsData, error: eventsError } = await query;
+      if (eventsError) {
+        console.error('Error fetching joined events:', eventsError);
+        return [];
+      }
+
+      return eventsData.map(event => ({
+        ...event,
+        creatorUsername: userMap.get(event.creator_user)?.username ?? 'Unknown',
+        profileImage: userMap.get(event.creator_user)?.profile_image ?? null,
+        imageUrls: event.images ?? []
+      }));
+    } catch (err) {
+      console.error('Unexpected error fetching joined events:', err);
+      return [];
+    }
+  }
+
 }
