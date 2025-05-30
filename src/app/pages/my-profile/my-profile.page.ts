@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent } from '@ionic/angular/standalone';
@@ -15,7 +15,7 @@ import {SupabaseService} from "../../services/supabase.service";
   standalone: true,
   imports: [IonContent, CommonModule, FormsModule, FooterComponent, ProfileImageComponent, ProfileCountersComponent, EventPostComponent]
 })
-export class MyProfilePage implements OnInit {
+export class MyProfilePage {
   nameAndSurname: string ="Name Surname";
   username: string = "username";
   profileImage: string | null = null;
@@ -26,11 +26,11 @@ export class MyProfilePage implements OnInit {
 
   constructor(private supabaseService: SupabaseService) { }
 
-  async ngOnInit() {
+  async ionViewWillEnter() {
     const userId = await this.supabaseService.getUserId();
     if (!userId){
       console.error('No authenticated user found');
-      return
+      return;
     }
 
     const profileData = await this.supabaseService.getUserProfileData(userId);
@@ -39,15 +39,12 @@ export class MyProfilePage implements OnInit {
       return;
     }
 
-    if (userId) {
-      this.username = profileData.username;
-      this.nameAndSurname = `${profileData.name} ${profileData.surname}`;
-      this.profileImage = profileData.profile_image;
-      this.createdEventsCount = profileData.createdEventsCount;
-      this.followersCount = profileData.followersCount;
-      this.followingCount = profileData.followingCount;
-      this.userEvents = await this.supabaseService.getCreatedEventsByUserId(userId);
-      console.log('User events:', this.userEvents);
-    }
+    this.username = profileData.username;
+    this.nameAndSurname = `${profileData.name} ${profileData.surname}`;
+    this.profileImage = profileData.profile_image;
+    this.createdEventsCount = profileData.createdEventsCount;
+    this.followersCount = profileData.followersCount;
+    this.followingCount = profileData.followingCount;
+    this.userEvents = await this.supabaseService.getCreatedEventsByUserId(userId);
   }
 }

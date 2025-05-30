@@ -45,19 +45,28 @@ export class MyEventsPage implements OnInit {
 
       this.events = [...this.events, ...newEvents];
       this.offset += this.limit;
+      console.log('Loaded events:', this.events);
 
-      if (event) {
-        event.target.complete();
-      }
-
-      if (newEvents.length < this.limit && event) {
-        event.target.disabled = true;
-      }
-
+      if (event) event.target.complete();
+      if (newEvents.length < this.limit && event) event.target.disabled = true;
     } catch (error) {
       console.error('Error loading more events:', error);
     } finally {
       this.loading = false;
     }
+  }
+
+  async ionViewWillEnter() {
+    this.reset();
+    this.userId = await this.supabaseService.getUserId();
+    if (this.userId) {
+      await this.loadMoreEvents();
+    }
+  }
+
+  reset() {
+    this.events = [];
+    this.offset = 0;
+    this.loading = false;
   }
 }

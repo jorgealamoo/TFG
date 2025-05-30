@@ -53,4 +53,18 @@ export class HomePage implements OnInit {
       this.loading = false;
     }
   }
+
+  async ionViewWillEnter() {
+    this.reset();
+    this.userId = await this.supabaseService.getUserId();
+    if (this.userId) {
+      await this.loadMoreEvents();
+    }
+  }
+
+  reset() {
+    this.events = [];
+    this.offset = 0;
+    this.loading = false;
+  }
 }

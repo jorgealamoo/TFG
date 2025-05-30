@@ -19,7 +19,6 @@ import {SupabaseService} from "../../services/supabase.service";
 })
 export class ProfilePage implements OnInit {
   userId!: string;
-
   nameAndSurname: string ="Name Surname";
   username: string = "username";
   profileImage: string | null = null;
@@ -76,4 +75,17 @@ export class ProfilePage implements OnInit {
       this.followersCount = Math.max(0, this.followersCount - 1);
     }
   }
+
+  async ionViewWillEnter() {
+    this.reset();
+  }
+
+  reset() {
+    this.userEvents = [];
+    this.followersCount = 0;
+    this.followingCount = 0;
+    this.createdEventsCount = 0;
+    this.profileImage = null;
+  }
+
 }
