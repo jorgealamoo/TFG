@@ -4,7 +4,8 @@
   <div class="edit-profile-container">
     <app-profile-image
       [editable]="true"
-      [imageUrl]="profileImage ?? 'assets/images/default_profile_image.png'"
+      [imageUrl]="imagePreviewUrl"
+      (imageChange)="onImageChange($event)"
     ></app-profile-image>
 
     <div class="email-container">

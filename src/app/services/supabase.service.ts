@@ -632,10 +632,50 @@ export class SupabaseService {
   }
 
   async updateProfile(userId: string, data: any) {
-    return this.supabase
-      .from('users')
-      .update(data)
-      .eq('id', userId);
+    try {
+      let imageUrl = null;
+
+      if (data.profile_image instanceof File) {
+        const file = data.profile_image;
+        const uniqueName = `${userId}-${Date.now()}-${file.name}`;
+        const filePath = `${uniqueName}`;
+
+        const { error: uploadError } = await this.supabase.storage
+          .from('profile-pictures')
+          .upload(filePath, file, {
+            cacheControl: '3600',
+            upsert: true
+          });
+
+        if (uploadError) console.error('Error uploading profile image:', uploadError);
+
+        const { data: urlData } = this.supabase.storage
+          .from('profile-pictures')
+          .getPublicUrl(filePath);
+
+        imageUrl = urlData.publicUrl;
+      }
+
+      const updateData = {
+        ...data,
+        ...(imageUrl && { profile_image: imageUrl })
+      };
+
+      if (updateData.profile_image instanceof File) {
+        delete updateData.profile_image;
+      }
+
+      const { error } = await this.supabase
+        .from('users')
+        .update(updateData)
+        .eq('id', userId);
+
+      if (error) console.error('Error updating user profile:', error);
+    } catch (err) {
+      console.error('Unexpected error updating profile:', err);
+      throw err;
+    }
   }
+
 
 }

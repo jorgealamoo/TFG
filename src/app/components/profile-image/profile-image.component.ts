@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {NgClass} from "@angular/common";
 
 @Component({
@@ -12,6 +12,7 @@ import {NgClass} from "@angular/common";
 export class ProfileImageComponent {
   @Input() imageUrl: string = "assets/images/default_profile_image.png";
   @Input() editable: boolean = false;
+  @Output() imageChange = new EventEmitter<File>();
 
   @ViewChild('fileInput') fileInputRef!: ElementRef<HTMLInputElement>;
 
@@ -27,6 +28,7 @@ export class ProfileImageComponent {
       const reader = new FileReader();
       reader.onload = () => {
         this.imageUrl = reader.result as string;
+        this.imageChange.emit(file);
       };
       reader.readAsDataURL(file);
     }

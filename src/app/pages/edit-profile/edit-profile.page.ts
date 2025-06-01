@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent } from '@ionic/angular/standalone';
@@ -17,9 +17,10 @@ import {Router} from "@angular/router";
   standalone: true,
   imports: [IonContent, CommonModule, FormsModule, HeaderComponent, ProfileImageComponent, EditProfileInputComponent]
 })
-export class EditProfilePage {
+export class EditProfilePage implements OnDestroy {
   userId: string | null = null;
-  profileImage: string | null = null;
+  profileImage: string | File | null = null;
+  imagePreviewUrl: string = 'assets/images/default_profile_image.png';
   email!: string;
   name!: string;
   surname!: string;
@@ -28,7 +29,8 @@ export class EditProfilePage {
   constructor(
     private supabaseService: SupabaseService,
     private alertController: AlertController,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) { }
 
   async ionViewWillEnter() {
@@ -45,10 +47,19 @@ export class EditProfilePage {
     }
 
     this.profileImage = profileData.profile_image;
+
+    if (typeof this.profileImage === 'string') {
+      this.imagePreviewUrl = this.profileImage;
+    } else {
+      this.imagePreviewUrl = 'assets/images/default_profile_image.png';
+    }
+
     this.email = profileData.email;
     this.name = profileData.name;
     this.surname = profileData.surname;
     this.username = profileData.username;
+
+    this.cdr.detectChanges();
   }
 
   async saveProfile() {
@@ -66,14 +77,27 @@ export class EditProfilePage {
     const updateResult = await this.supabaseService.updateProfile(this.userId, {
       username: this.username,
       name: this.name,
-      surname: this.surname
+      surname: this.surname,
+      profile_image: this.profileImage
     });
 
-    if (updateResult.error) {
-      console.error('Error updating profile:', updateResult.error);
-    } else {
-      this.router.navigate(['/my-profile']);
-      console.log('Profile updated successfully');
+    this.router.navigate(['/my-profile']);
+    console.log('Profile updated successfully');
+  }
+
+  onImageChange(file: File) {
+    this.profileImage = file;
+
+    if (this.imagePreviewUrl && this.imagePreviewUrl.startsWith('blob:')) {
+      URL.revokeObjectURL(this.imagePreviewUrl);
+    }
+
+    this.imagePreviewUrl = URL.createObjectURL(file);
+  }
+
+  ngOnDestroy() {
+    if (this.imagePreviewUrl?.startsWith('blob:')) {
+      URL.revokeObjectURL(this.imagePreviewUrl);
     }
   }
 }
