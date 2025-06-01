@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {IonButton, IonFooter, IonToolbar} from "@ionic/angular/standalone";
 import {NgIf, NgOptimizedImage} from "@angular/common";
 import {SupabaseService} from "../../services/supabase.service";
@@ -15,14 +15,14 @@ import {SupabaseService} from "../../services/supabase.service";
     NgIf
   ]
 })
-export class EventFooterComponent {
+export class EventFooterComponent implements OnInit {
   @Input() eventId!: string;
   joined: boolean = false;
   due: string = "0.00";
 
   constructor(private supabase: SupabaseService) { }
 
-  async ionViewWillEnter() {
+  async ngOnInit() {
     try {
       const userId = await this.supabase.getUserId();
       if (!userId) {
