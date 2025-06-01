@@ -74,7 +74,7 @@ export class EditProfilePage implements OnDestroy {
       return;
     }
 
-    const updateResult = await this.supabaseService.updateProfile(this.userId, {
+    await this.supabaseService.updateProfile(this.userId, {
       username: this.username,
       name: this.name,
       surname: this.surname,
