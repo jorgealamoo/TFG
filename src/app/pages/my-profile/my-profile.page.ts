@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent } from '@ionic/angular/standalone';
 import {FooterComponent} from "../../components/footer/footer.component";
@@ -7,13 +7,14 @@ import {ProfileImageComponent} from "../../components/profile-image/profile-imag
 import {ProfileCountersComponent} from "../../components/profile-counters/profile-counters.component";
 import {EventPostComponent} from "../../components/event-post/event-post.component";
 import {SupabaseService} from "../../services/supabase.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-my-profile',
   templateUrl: './my-profile.page.html',
   styleUrls: ['./my-profile.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, FooterComponent, ProfileImageComponent, ProfileCountersComponent, EventPostComponent]
+  imports: [IonContent, CommonModule, FormsModule, FooterComponent, ProfileImageComponent, ProfileCountersComponent, EventPostComponent, NgOptimizedImage]
 })
 export class MyProfilePage {
   nameAndSurname: string ="Name Surname";
@@ -24,7 +25,10 @@ export class MyProfilePage {
   followingCount: number = 0;
   userEvents: any[] = [];
 
-  constructor(private supabaseService: SupabaseService) { }
+  constructor(
+    private supabaseService: SupabaseService,
+    private router: Router
+  ) { }
 
   async ionViewWillEnter() {
     const userId = await this.supabaseService.getUserId();
@@ -46,5 +50,9 @@ export class MyProfilePage {
     this.followersCount = profileData.followersCount;
     this.followingCount = profileData.followingCount;
     this.userEvents = await this.supabaseService.getCreatedEventsByUserId(userId);
+  }
+
+  openSettings() {
+    this.router.navigate(['/edit-profile']);
   }
 }

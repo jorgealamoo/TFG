@@ -312,6 +312,38 @@ export class SupabaseService {
     }
   }
 
+  async getEditProfileData(userId: string): Promise<{
+    email: string;
+    username: string;
+    name: string;
+    surname: string;
+    profile_image: string | null;
+  } | null> {
+    try {
+      const { data, error } = await this.supabase
+        .from('users')
+        .select('email, username, name, surname, profile_image')
+        .eq('id', userId)
+        .single();
+
+      if (error) {
+        console.error('Error fetching edit profile data:', error);
+        return null;
+      }
+
+      return {
+        email: data.email,
+        username: data.username,
+        name: data.name,
+        surname: data.surname,
+        profile_image: data.profile_image ?? null
+      };
+    } catch (err) {
+      console.error('Unexpected error fetching edit profile data:', err);
+      return null;
+    }
+  }
+
   async getCreatedEventsByUserId(userId: string): Promise<any[]> {
     try {
       const { data: userData, error: userError } = await this.supabase
@@ -528,52 +560,6 @@ export class SupabaseService {
       throw err;
     }
   }
-
-  /*
-  async getJoinedEvents(
-    userId: string,
-    filter: 'all' | 'upcoming' | 'past' = 'all',
-    sortBy: 'date_desc' | 'date_asc' | 'creator' = 'date_desc',
-    limit: number = 10,
-    offset: number = 0
-  ): Promise<any[]> {
-    try {
-      let query = this.supabase
-        .from('events')
-        .select('*')
-        .contains('participants', [userId]);
-
-      const today = new Date().toISOString();
-
-      if (filter === 'upcoming') {
-        query = query.gte('created_at', today);
-      } else if (filter === 'past') {
-        query = query.lt('created_at', today);
-      }
-
-      if (sortBy === 'date_asc') {
-        query = query.order('created_at', { ascending: true });
-      } else if (sortBy === 'date_desc') {
-        query = query.order('created_at', { ascending: false });
-      } else if (sortBy === 'creator') {
-        query = query.order('creator_user', { ascending: true });
-      }
-
-      query = query.range(offset, offset + limit - 1);
-
-      const { data, error } = await query;
-
-      if (error) {
-        console.error('Error fetching joined events:', error);
-      }
-
-      return data || [];
-    } catch (err) {
-      console.error('Unexpected error fetching joined events:', err);
-      return [];
-    }
-  }
-  */
 
   async getJoinedEvents(
     userId: string,

@@ -1,0 +1,23 @@
+.edit-profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  gap: 20px;
+
+  .email-container{
+    margin-top: 5px;
+    font-family: 'Inter', sans-serif;
+    font-size: 18px;
+
+    .email-title {
+      font-weight: 500;
+      color: #3B82F6;
+    }
+
+    .profile-email {
+      font-weight: 600;
+      color: black;
+    }
+  }
+}

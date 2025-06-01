@@ -40,3 +40,13 @@ app-footer {
     color: #3B82F6;
   }
 }
+
+.settings-icon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 28px;
+  height: 28px;
+  z-index: 11;
+  cursor: pointer;
+}

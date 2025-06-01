@@ -1,0 +1,21 @@
+<app-header title="Edit profile" [showBack]="true" [showCheck]="true"></app-header>
+
+<ion-content>
+  <div class="edit-profile-container">
+    <app-profile-image
+      [editable]="true"
+      [imageUrl]="profileImage ?? 'assets/images/default_profile_image.png'"
+    ></app-profile-image>
+
+    <div class="email-container">
+      <span class="email-title">Email: </span>
+      <span class="profile-email">{{email}}</span>
+    </div>
+
+    <app-edit-profile-input input_title="Username" [input_value]="username"></app-edit-profile-input>
+
+    <app-edit-profile-input input_title="Name" [input_value]="name"></app-edit-profile-input>
+
+    <app-edit-profile-input input_title="Surname" [input_value]="surname"></app-edit-profile-input>
+  </div>
+</ion-content>

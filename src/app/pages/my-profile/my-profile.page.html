@@ -1,5 +1,11 @@
 <ion-content>
   <div class="my-profile-container">
+    <img
+      ngSrc="assets/images/settings.png"
+      class="settings-icon" alt="Settings"
+      height="28" width="28"
+      (click)="openSettings()"
+    >
     <div class="profile-info-container">
       <app-profile-image [imageUrl]="profileImage ?? 'assets/images/default_profile_image.png'"></app-profile-image>
 

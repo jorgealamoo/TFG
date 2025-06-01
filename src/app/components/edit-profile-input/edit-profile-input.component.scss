@@ -1,0 +1,26 @@
+.edit-profile-input-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  font-family: 'Inter', sans-serif;
+
+  .input-title {
+    color: #3B82F6;
+    font-size: 18px;
+    margin: 0;
+    padding-left: 15px;
+  }
+
+  .edit-profile-input {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: black;
+    padding: 0;
+    border-bottom: 1px solid #3BADEC;
+    --padding-start: 15px;
+    --padding-end: 15px;
+    --highlight-color-focused: #3BADEC;
+  }
+
+}
