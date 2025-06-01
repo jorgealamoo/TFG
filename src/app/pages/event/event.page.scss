@@ -24,13 +24,10 @@ p {
     font-size: 18px;
     margin-top: 10px;
 
-    ion-avatar {
+    .profile-img {
       height: 26px;
       width: 26px;
-      img {
-        height: 26px;
-        width: auto;
-      }
+      border-radius: 50%;
     }
   }
 
