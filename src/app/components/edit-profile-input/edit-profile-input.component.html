@@ -2,7 +2,8 @@
   <p class="input-title">{{ input_title }}</p>
   <ion-input
     class="edit-profile-input"
-    value="{{ input_value }}"
+    [(ngModel)]="input_value"
     placeholder="{{ input_title }}"
+    (ngModelChange)="onInputChange($event)"
   ></ion-input>
 </div>

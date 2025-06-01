@@ -631,4 +631,11 @@ export class SupabaseService {
     }
   }
 
+  async updateProfile(userId: string, data: any) {
+    return this.supabase
+      .from('users')
+      .update(data)
+      .eq('id', userId);
+  }
+
 }

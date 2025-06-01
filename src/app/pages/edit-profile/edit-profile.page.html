@@ -1,4 +1,4 @@
-<app-header title="Edit profile" [showBack]="true" [showCheck]="true"></app-header>
+<app-header title="Edit profile" [showBack]="true" [showCheck]="true" (checkClicked)="saveProfile()"></app-header>
 
 <ion-content>
   <div class="edit-profile-container">
@@ -12,10 +12,22 @@
       <span class="profile-email">{{email}}</span>
     </div>
 
-    <app-edit-profile-input input_title="Username" [input_value]="username"></app-edit-profile-input>
+    <app-edit-profile-input
+      input_title="Username"
+      [input_value]="username"
+      (input_valueChange)="username = $event"
+    ></app-edit-profile-input>
 
-    <app-edit-profile-input input_title="Name" [input_value]="name"></app-edit-profile-input>
+    <app-edit-profile-input
+      input_title="Name"
+      [input_value]="name"
+      (input_valueChange)="name = $event"
+    ></app-edit-profile-input>
 
-    <app-edit-profile-input input_title="Surname" [input_value]="surname"></app-edit-profile-input>
+    <app-edit-profile-input
+      input_title="Surname"
+      [input_value]="surname"
+      (input_valueChange)="surname = $event"
+    ></app-edit-profile-input>
   </div>
 </ion-content>

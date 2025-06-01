@@ -1,5 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {IonInput, IonItem} from "@ionic/angular/standalone";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {IonInput} from "@ionic/angular/standalone";
+import {FormsModule} from "@angular/forms";
 
 @Component({
   selector: 'app-edit-profile-input',
@@ -7,12 +8,17 @@ import {IonInput, IonItem} from "@ionic/angular/standalone";
   styleUrls: ['./edit-profile-input.component.scss'],
   imports: [
     IonInput,
-    IonItem
+    FormsModule
   ]
 })
 export class EditProfileInputComponent {
-  @Input() input_title: string = "Username";
+  @Input() input_title: string = "Input title";
   @Input() input_value!: string;
+  @Output() input_valueChange = new EventEmitter<string>();
+
+  onInputChange(value: string) {
+    this.input_valueChange.emit(value);
+  }
 
   constructor() { }
 
