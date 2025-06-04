@@ -9,13 +9,15 @@ import {SupabaseService} from "../../services/supabase.service";
 import {AlertController} from "@ionic/angular";
 import {showAlert} from "../../services/utils";
 import {Router} from "@angular/router";
+import {ChangePasswordButtonComponent} from "../../components/change-password-button/change-password-button.component";
+import {LogoutButtonComponent} from "../../components/logout-button/logout-button.component";
 
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.page.html',
   styleUrls: ['./edit-profile.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, HeaderComponent, ProfileImageComponent, EditProfileInputComponent]
+  imports: [IonContent, CommonModule, FormsModule, HeaderComponent, ProfileImageComponent, EditProfileInputComponent, ChangePasswordButtonComponent, LogoutButtonComponent]
 })
 export class EditProfilePage implements OnDestroy {
   userId: string | null = null;

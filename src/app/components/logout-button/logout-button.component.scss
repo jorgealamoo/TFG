@@ -1,0 +1,15 @@
+.logout-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  .logout-button-text {
+    padding-left: 5px;
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: #FE8430;
+    text-transform: none;
+  }
+}

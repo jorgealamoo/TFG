@@ -59,7 +59,7 @@ export class SupabaseService {
       this.supabase.removeChannel(sup);
     });
 
-    this.router.navigate(['/']);
+    this.router.navigate(['']);
   }
 
   async updateUsername(userId: string, username: string) {
