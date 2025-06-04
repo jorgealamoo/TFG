@@ -677,5 +677,42 @@ export class SupabaseService {
     }
   }
 
+  async changePassword(newPassword: string): Promise<void> {
+    try {
+      const { data: userData, error: userError } = await this.supabase.auth.getUser();
+
+      if (userError || !userData?.user) {
+        console.error('Could not get current user');
+      }
+
+      const { error } = await this.supabase.auth.updateUser({
+        password: newPassword,
+      });
+
+      if (error) {
+        console.error('Error changing password:', error);
+      }
+    } catch (err) {
+      console.error('Unespected error changing password:', err);
+    }
+  }
+
+  async verifyCurrentPassword(password: string): Promise<boolean> {
+    const { data, error: userError } = await this.supabase.auth.getUser();
+
+    if (userError || !data?.user?.email) {
+      console.error('Error getting user email:', userError);
+      return false;
+    }
+
+    const email = data.user.email;
+
+    const { error } = await this.supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    return !error;
+  }
 
 }
