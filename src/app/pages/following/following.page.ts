@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
+import { IonContent } from '@ionic/angular/standalone';
 import {HeaderComponent} from "../../components/header/header.component";
 import {
   UserFollowerFollowingComponent
@@ -14,7 +14,7 @@ import {SupabaseService} from "../../services/supabase.service";
   templateUrl: './following.page.html',
   styleUrls: ['./following.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, HeaderComponent, UserFollowerFollowingComponent]
+  imports: [IonContent, CommonModule, FormsModule, HeaderComponent, UserFollowerFollowingComponent]
 })
 export class FollowingPage {
   private readonly userId: string;
