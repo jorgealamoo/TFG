@@ -742,4 +742,31 @@ export class SupabaseService {
     return followersData;
   }
 
+  async getFollowingByUserId(userId: string) {
+    const { data: profile, error: profileError } = await this.supabase
+      .from('users')
+      .select('following')
+      .eq('id', userId)
+      .single();
+
+    if (profileError || !profile?.following || profile.following.length === 0) {
+      console.error('Error loading following array:', profileError);
+      return [];
+    }
+
+    const followingIds = profile.following;
+
+    const { data: followingData, error: followingError } = await this.supabase
+      .from('users')
+      .select('id, username, profile_image')
+      .in('id', followingIds);
+
+    if (followingError) {
+      console.error('Error loading following profiles:', followingError);
+      return [];
+    }
+
+    return followingData;
+  }
+
 }
