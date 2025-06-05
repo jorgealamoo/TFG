@@ -1,0 +1,12 @@
+<app-header title="Followers" [showBack]="true"></app-header>
+
+<ion-content>
+  <div class="followers-container">
+    <app-user-follower-following
+      *ngFor="let follower of followers"
+      [username]="follower.username"
+      [profileImage]="follower.profile_image"
+      [userId]="follower.id"
+    ></app-user-follower-following>
+  </div>
+</ion-content>

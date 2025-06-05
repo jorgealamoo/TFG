@@ -24,6 +24,7 @@ export class MyProfilePage {
   followersCount: number = 0;
   followingCount: number = 0;
   userEvents: any[] = [];
+  userId: string | null = null;
 
   constructor(
     private supabaseService: SupabaseService,
@@ -31,13 +32,13 @@ export class MyProfilePage {
   ) { }
 
   async ionViewWillEnter() {
-    const userId = await this.supabaseService.getUserId();
-    if (!userId){
+    this.userId = await this.supabaseService.getUserId();
+    if (!this.userId){
       console.error('No authenticated user found');
       return;
     }
 
-    const profileData = await this.supabaseService.getUserProfileData(userId);
+    const profileData = await this.supabaseService.getUserProfileData(this.userId);
     if (!profileData) {
       console.error('No profile data found');
       return;
@@ -49,7 +50,7 @@ export class MyProfilePage {
     this.createdEventsCount = profileData.createdEventsCount;
     this.followersCount = profileData.followersCount;
     this.followingCount = profileData.followingCount;
-    this.userEvents = await this.supabaseService.getCreatedEventsByUserId(userId);
+    this.userEvents = await this.supabaseService.getCreatedEventsByUserId(this.userId);
   }
 
   openSettings() {

@@ -715,4 +715,31 @@ export class SupabaseService {
     return !error;
   }
 
+  async getFollowersByUserId(userId: string) {
+    const { data: profile, error: profileError } = await this.supabase
+      .from('users')
+      .select('followers')
+      .eq('id', userId)
+      .single();
+
+    if (profileError || !profile?.followers || profile.followers.length === 0) {
+      console.error('Error loading followers array:', profileError);
+      return [];
+    }
+
+    const followerIds = profile.followers;
+
+    const { data: followersData, error: followersError } = await this.supabase
+      .from('users')
+      .select('id, username, profile_image')
+      .in('id', followerIds);
+
+    if (followersError) {
+      console.error('Error loading follower profiles:', followersError);
+      return [];
+    }
+
+    return followersData;
+  }
+
 }

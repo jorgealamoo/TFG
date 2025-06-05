@@ -19,6 +19,7 @@
       [postsNumber]="createdEventsCount"
       [followersNumber]="followersCount"
       [followingNumber]="followingCount"
+      [userId]="userId"
     ></app-profile-counters>
 
     <app-event-post *ngFor="let event of userEvents" [event]="event"></app-event-post>

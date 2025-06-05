@@ -54,5 +54,13 @@ export const routes: Routes = [
   {
     path: 'edit-profile',
     loadComponent: () => import('./pages/edit-profile/edit-profile.page').then( m => m.EditProfilePage)
+  },
+  {
+    path: 'followers/:userId',
+    loadComponent: () => import('./pages/followers/followers.page').then( m => m.FollowersPage)
+  },
+  {
+    path: 'following/:userId',
+    loadComponent: () => import('./pages/following/following.page').then( m => m.FollowingPage)
   }
 ];
