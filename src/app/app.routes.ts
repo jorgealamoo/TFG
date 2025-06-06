@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import {authGuard} from "./guards/auth.guard";
 
 export const routes: Routes = [
   {
@@ -15,11 +16,13 @@ export const routes: Routes = [
   },
   {
     path: 'home',
-    loadComponent: () => import('./pages/home/home.page').then( m => m.HomePage)
+    loadComponent: () => import('./pages/home/home.page').then( m => m.HomePage),
+    canActivate: [authGuard]
   },
   {
     path: 'create-event',
-    loadComponent: () => import('./pages/create-event/create-event.page').then( m => m.CreateEventPage)
+    loadComponent: () => import('./pages/create-event/create-event.page').then( m => m.CreateEventPage),
+    canActivate: [authGuard]
   },
   {
     path: 'create-event-shopping-list',
@@ -29,38 +32,49 @@ export const routes: Routes = [
   },
   {
     path: 'create-event-participants',
-    loadComponent: () => import('./pages/create-event-participants/create-event-participants.page').then( m => m.CreateEventParticipantsPage)
+    loadComponent: () =>
+      import('./pages/create-event-participants/create-event-participants.page')
+      .then( m => m.CreateEventParticipantsPage),
+    canActivate: [authGuard]
   },
   {
     path: 'event/:id',
-    loadComponent: () => import('./pages/event/event.page').then( m => m.EventPage)
+    loadComponent: () => import('./pages/event/event.page').then( m => m.EventPage),
+    canActivate: [authGuard]
   },
   {
     path: 'my-events',
-    loadComponent: () => import('./pages/my-events/my-events.page').then( m => m.MyEventsPage)
+    loadComponent: () => import('./pages/my-events/my-events.page').then( m => m.MyEventsPage),
+    canActivate: [authGuard]
   },
   {
     path: 'search',
-    loadComponent: () => import('./pages/search/search.page').then( m => m.SearchPage)
+    loadComponent: () => import('./pages/search/search.page').then( m => m.SearchPage),
+    canActivate: [authGuard]
   },
   {
     path: 'my-profile',
-    loadComponent: () => import('./pages/my-profile/my-profile.page').then( m => m.MyProfilePage)
+    loadComponent: () => import('./pages/my-profile/my-profile.page').then( m => m.MyProfilePage),
+    canActivate: [authGuard]
   },
   {
     path: 'profile/:userId',
-    loadComponent: () => import('./pages/profile/profile.page').then( m => m.ProfilePage)
+    loadComponent: () => import('./pages/profile/profile.page').then( m => m.ProfilePage),
+    canActivate: [authGuard]
   },
   {
     path: 'edit-profile',
-    loadComponent: () => import('./pages/edit-profile/edit-profile.page').then( m => m.EditProfilePage)
+    loadComponent: () => import('./pages/edit-profile/edit-profile.page').then( m => m.EditProfilePage),
+    canActivate: [authGuard]
   },
   {
     path: 'followers/:userId',
-    loadComponent: () => import('./pages/followers/followers.page').then( m => m.FollowersPage)
+    loadComponent: () => import('./pages/followers/followers.page').then( m => m.FollowersPage),
+    canActivate: [authGuard]
   },
   {
     path: 'following/:userId',
-    loadComponent: () => import('./pages/following/following.page').then( m => m.FollowingPage)
+    loadComponent: () => import('./pages/following/following.page').then( m => m.FollowingPage),
+    canActivate: [authGuard]
   }
 ];
