@@ -1,15 +1,27 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>search</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header title="Search"></app-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">search</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
+  <div class="search-container">
+    <div class="search-bars-container">
+      <app-search-bar (searchChange)="onSearch($event)"></app-search-bar>
+    </div>
+
+    <div class="search-results-container">
+      <ng-container *ngIf="searchResults.length > 0; else noResults">
+        <app-event-post *ngFor="let event of searchResults" [event]="event"></app-event-post>
+      </ng-container>
+
+      <ng-template #noResults>
+        <p class="no-results">No results found.</p>
+      </ng-template>
+
+      <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMoreEvents($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more events...">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </div>
+  </div>
+
+  <app-footer></app-footer>
 </ion-content>
 
-<app-footer></app-footer>

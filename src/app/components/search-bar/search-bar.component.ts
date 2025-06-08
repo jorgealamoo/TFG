@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {IonInput, IonItem} from "@ionic/angular/standalone";
 import {FormsModule} from "@angular/forms";
 
@@ -14,10 +14,11 @@ import {FormsModule} from "@angular/forms";
 })
 export class SearchBarComponent {
   searchText: string = "";
+  @Output() searchChange = new EventEmitter<string>();
 
   constructor() { }
 
   onSearch() {
-    console.log('Searching:', this.searchText);
+    this.searchChange.emit(this.searchText.trim());
   }
 }

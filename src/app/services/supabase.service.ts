@@ -344,6 +344,45 @@ export class SupabaseService {
     }
   }
 
+  async getMyCreatedEventsByUserId(userId: string): Promise<any[]> {
+    try {
+      const { data: userData, error: userError } = await this.supabase
+        .from('users')
+        .select('created_events, username, profile_image')
+        .eq('id', userId)
+        .single();
+
+      if (userError || !userData) {
+        console.error('Error fetching user data:', userError);
+        return [];
+      }
+
+      const eventIds = userData.created_events;
+      if (!eventIds || eventIds.length === 0) return [];
+
+      const { data: events, error: eventsError } = await this.supabase
+        .from('events')
+        .select('*')
+        .in('id', eventIds)
+        .order('created_at', { ascending: false });
+
+      if (eventsError || !events) {
+        console.error('Error fetching events:', eventsError);
+        return [];
+      }
+
+      return events.map(event => ({
+        ...event,
+        imageUrls: event.images ?? [],
+        creatorUsername: userData.username,
+        profileImage: userData.profile_image,
+      }));
+    } catch (err) {
+      console.error('Unexpected error fetching enriched events:', err);
+      return [];
+    }
+  }
+
   async getCreatedEventsByUserId(userId: string): Promise<any[]> {
     try {
       const { data: userData, error: userError } = await this.supabase
@@ -363,6 +402,7 @@ export class SupabaseService {
       const { data: events, error: eventsError } = await this.supabase
         .from('events')
         .select('*')
+        .eq('privacy', 'public')
         .in('id', eventIds)
         .order('created_at', { ascending: false });
 
@@ -499,6 +539,7 @@ export class SupabaseService {
     const { data: eventsData, error: eventsError } = await this.supabase
       .from('events')
       .select('*')
+      .eq('privacy', 'public')
       .in('creator_user', followedUserIds)
       .order('created_at', { ascending: false })
       .range(offset, offset + limit - 1);
@@ -769,4 +810,64 @@ export class SupabaseService {
     return followingData;
   }
 
+  async searchEventsPaginated(query: string, limit: number, offset: number): Promise<any[]> {
+    if (!query || query.trim() === '') return [];
+
+    const { data: eventsData, error: eventsError } = await this.supabase
+      .from('events')
+      .select('*')
+      .ilike('title', `%${query.trim()}%`)
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limit - 1);
+
+    if (eventsError) throw eventsError;
+    if (!eventsData || eventsData.length === 0) return [];
+
+    const creatorIds = [...new Set(eventsData.map(e => e.creator_user))];
+
+    const { data: usersData, error: usersError } = await this.supabase
+      .from('users')
+      .select('id, username, profile_image')
+      .in('id', creatorIds);
+
+    if (usersError) throw usersError;
+
+    const userMap = new Map(usersData.map(user => [user.id, user]));
+
+    return eventsData.map(event => ({
+      ...event,
+      creatorUsername: userMap.get(event.creator_user)?.username ?? 'Unknown',
+      profileImage: userMap.get(event.creator_user)?.profile_image ?? null,
+      imageUrls: event.images ?? []
+    }));
+  }
+
+  async getRecommendedEvents(limit: number = 5, offset: number = 0): Promise<any[]> {
+    const { data: eventsData, error: eventsError } = await this.supabase
+      .from('events')
+      .select('*')
+      .eq('privacy', 'public')
+      .order('created_at', { ascending: false })
+      .range(offset, offset + limit - 1);
+
+    if (eventsError) throw eventsError;
+
+    const creatorIds = [...new Set(eventsData.map(e => e.creator_user))];
+
+    const { data: usersData, error: usersError } = await this.supabase
+      .from('users')
+      .select('id, username, profile_image')
+      .in('id', creatorIds);
+
+    if (usersError) throw usersError;
+
+    const userMap = new Map(usersData.map(user => [user.id, user]));
+
+    return eventsData.map(event => ({
+      ...event,
+      creatorUsername: userMap.get(event.creator_user)?.username ?? 'Unknown',
+      profileImage: userMap.get(event.creator_user)?.profile_image ?? null,
+      imageUrls: event.images ?? []
+    }));
+  }
 }
