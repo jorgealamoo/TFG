@@ -50,7 +50,7 @@ export class MyProfilePage {
     this.createdEventsCount = profileData.createdEventsCount;
     this.followersCount = profileData.followersCount;
     this.followingCount = profileData.followingCount;
-    this.userEvents = await this.supabaseService.getCreatedEventsByUserId(this.userId);
+    this.userEvents = await this.supabaseService.getMyCreatedEventsByUserId(this.userId);
   }
 
   openSettings() {

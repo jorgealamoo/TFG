@@ -54,13 +54,13 @@ export class ProfilePage implements OnInit {
           this.profileImage = profileData.profile_image;
           this.followersCount = profileData.followersCount;
           this.followingCount = profileData.followingCount;
-          this.createdEventsCount = profileData.createdEventsCount;
         } else {
           console.warn('User profile data not found for userId:', userId);
           this.router.navigate(['/home']);
         }
 
         this.userEvents = await this.supabaseService.getCreatedEventsByUserId(userId);
+        this.createdEventsCount = this.userEvents.length;
       } catch (error) {
         console.error('Error loading profile data:', error);
         this.router.navigate(['/home']);
