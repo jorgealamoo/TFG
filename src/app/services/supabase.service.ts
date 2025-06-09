@@ -816,6 +816,7 @@ export class SupabaseService {
     const { data: eventsData, error: eventsError } = await this.supabase
       .from('events')
       .select('*')
+      .eq('privacy', 'public')
       .ilike('title', `%${query.trim()}%`)
       .order('created_at', { ascending: false })
       .range(offset, offset + limit - 1);
