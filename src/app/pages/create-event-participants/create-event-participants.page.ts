@@ -21,6 +21,7 @@ import {Router} from "@angular/router";
 export class CreateEventParticipantsPage implements OnInit {
   maxParticipants: number = 20;
   maxParticipantsEnabled: boolean = true;
+  eventUuid: string = '';
 
   constructor(
     private eventFormDataService: EventFormDataService,
@@ -33,6 +34,7 @@ export class CreateEventParticipantsPage implements OnInit {
     if (!eventData.uuid) {
       this.router.navigate(['/create-event']);
     }
+    this.eventUuid = eventData.uuid;
   }
 
   finalizeEventCreation() {

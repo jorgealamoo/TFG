@@ -1,5 +1,4 @@
 .event-more-info-container {
-  padding-top: 15px;
   display: flex;
   justify-content: center;
 }
@@ -19,6 +18,10 @@
     height: 35px;
     width: auto;
   }
+}
+
+.shopping-list-container{
+  padding-top: 15px;
 }
 
 .shopping-list-item {
@@ -57,4 +60,34 @@
 app-leave-event-button {
   display: flex;
   justify-content: center;
+}
+
+ion-text {
+  h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    color: #000000;
+    margin: 20px 0 0 20px;
+    display: block;
+  }
+}
+
+app-search-bar, app-shareable-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.select-users {
+  height: 50vh;
+  overflow-y: auto;
+  margin-top: 15px;
+  margin-bottom: 20px;
+
+  app-select-user {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

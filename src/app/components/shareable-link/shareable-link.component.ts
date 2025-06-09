@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {IonInput, IonItem} from "@ionic/angular/standalone";
 import {FormsModule} from "@angular/forms";
 import {EventFormDataService} from "../../services/event-form-data.service";
@@ -15,13 +15,13 @@ import {EventFormDataService} from "../../services/event-form-data.service";
 })
 export class ShareableLinkComponent  implements OnInit {
   shareableLink: string = 'https://example.com/shareable-link';
+  @Input() eventUuid!: string;
 
-  constructor(private eventFormDataService: EventFormDataService) { }
+  constructor() { }
 
   ngOnInit() {
-    const eventUuid = this.eventFormDataService.getData().uuid;
-    if (eventUuid) {
-      this.shareableLink = `https://evnet.com/event/${eventUuid}`;
+    if (this.eventUuid) {
+      this.shareableLink = `https://evnet.com/event/${(this.eventUuid)}`;
     }
   }
 
