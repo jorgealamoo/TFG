@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {IonInput, IonItem} from "@ionic/angular/standalone";
 import {FormsModule} from "@angular/forms";
-import {EventFormDataService} from "../../services/event-form-data.service";
 
 @Component({
   selector: 'app-shareable-link',
