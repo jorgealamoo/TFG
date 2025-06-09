@@ -8,10 +8,15 @@
   <div class="event-more-info-container">
 
     <div class="shopping-list-container" *ngIf="selectedView === 'shoppingList'">
-      <div *ngFor="let item of shoppingListItems">
+      <div *ngFor="let item of shoppingListItems; let i = index">
         <div class="shopping-list-item">
           <app-item-name [(value)]="item.name"></app-item-name>
-          <app-item-price [(value)]="item.price" (valueChange)="updateTotalPrice()"></app-item-price>
+
+          <div class="price-container">
+            <app-item-price [(value)]="item.price" (valueChange)="updateTotalPrice()"></app-item-price>
+
+            <div class="delete-button" (click)="removeItem(i)">×</div>
+          </div>
         </div>
       </div>
 
@@ -65,6 +70,10 @@
         <h2 class="shareable-link-title">Shareable link:</h2>
       </ion-text>
       <app-shareable-link></app-shareable-link>
+
+      <hr class="separator" />
+
+      <app-leave-event-button></app-leave-event-button>
     </div>
   </div>
 </ion-content>

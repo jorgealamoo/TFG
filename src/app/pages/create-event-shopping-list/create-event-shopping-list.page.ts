@@ -64,4 +64,9 @@ export class CreateEventShoppingListPage implements OnInit {
     this.router.navigate(['/create-event-participants']);
     console.log(this.eventFormDataService.getData());
   }
+
+  removeItem(index: number) {
+    this.shoppingListItems.splice(index, 1);
+    this.updateTotalPrice();
+  }
 }

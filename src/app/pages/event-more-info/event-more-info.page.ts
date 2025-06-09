@@ -55,4 +55,9 @@ export class EventMoreInfoPage {
     this.updateTotalPrice();
   }
 
+  removeItem(index: number) {
+    this.shoppingListItems.splice(index, 1);
+    this.updateTotalPrice();
+  }
+
 }

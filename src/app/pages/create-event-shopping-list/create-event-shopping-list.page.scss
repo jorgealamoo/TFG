@@ -28,4 +28,34 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+}
+
+.price-container {
+  position: relative;
+  display: inline-block;
+}
+
+.delete-button {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  background-color: #FE8430;
+  color: white;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #f89751;
+  }
 }
