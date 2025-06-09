@@ -1,5 +1,60 @@
 .event-more-info-container {
-  padding-top: 30px;
+  padding-top: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.add-item-button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  color: #3B82F6;
+  cursor: pointer;
+
+  img {
+    height: 35px;
+    width: auto;
+  }
+}
+
+.shopping-list-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.breakdown-payments-container{
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 40px;
+  margin-bottom: 30px;
+  border-top: 1px solid #3BADEC;
+  border-bottom: 1px solid #3BADEC;
+  padding-top: 15px;
+  padding-bottom: 25px;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+
+  p {
+    margin: 10px 0 15px 30px;
+  }
+
+  .breakdown-payments-title {
+    font-weight: bold;
+    color: #3B82F6;
+  }
+
+  .you-owe-title {
+    font-weight: 500;
+    color: black;
+  }
+}
+
+app-leave-event-button {
   display: flex;
   justify-content: center;
 }

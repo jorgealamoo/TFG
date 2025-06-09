@@ -1,3 +1,10 @@
+.switch-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 35px;
+}
+
 ion-segment.custom-segment {
   --background: #ffffff;
   --indicator-color: transparent;
@@ -15,7 +22,6 @@ ion-segment.custom-segment {
     font-weight: 600;
     font-size: 18px;
     text-transform: none;
-    border-radius: 20px;
     transition: all 0.2s ease-in-out;
     --indicator-color: transparent;
   }

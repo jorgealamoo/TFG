@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {IonText} from "@ionic/angular/standalone";
 import {NgIf} from "@angular/common";
 import {TotalPriceComponent} from "../total-price/total-price.component";
@@ -14,8 +14,8 @@ import {TotalPriceComponent} from "../total-price/total-price.component";
   ]
 })
 export class SplitCostsAutomaticallyComponent {
-  splitCostsEnabled = true;
-  entryPrice: number = 0;
+  @Input() splitCostsEnabled = true;
+  @Input() entryPrice: number = 0;
 
   constructor() { }
 

@@ -1,0 +1,18 @@
+ion-button::part(native) {
+  width: auto;
+  height: 47px;
+  background-color: #ffffff;
+  color: #FE8430;
+  border: 1px solid #FE8430;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  border-radius: 15px;
+  text-transform: none;
+  box-shadow: none;
+
+  &:hover {
+    background-color: #FE8430;
+    color: #ffffff;
+  }
+}

@@ -4,11 +4,38 @@
 ></app-event-header>
 
 <ion-content>
+  <app-shopping-list-participants-switch (viewChange)="onViewChange($event)"></app-shopping-list-participants-switch>
   <div class="event-more-info-container">
-    <app-shopping-list-participants-switch (viewChange)="onViewChange($event)"></app-shopping-list-participants-switch>
+
     <div class="shopping-list-container" *ngIf="selectedView === 'shoppingList'">
-      <p>Hola</p>
+      <div *ngFor="let item of shoppingListItems">
+        <div class="shopping-list-item">
+          <app-item-name [(value)]="item.name"></app-item-name>
+          <app-item-price [(value)]="item.price" (valueChange)="updateTotalPrice()"></app-item-price>
+        </div>
+      </div>
+
+      <div class="add-item-button" (click)="addItem()">
+        <img src="assets/images/add.png" alt="Add"/>
+        <span>Add item</span>
+      </div>
+
+      <app-total-price
+        [value]="totalPrice"
+        (valueChange)="totalPrice = $event"
+      ></app-total-price>
+
+      <app-split-costs-automatically></app-split-costs-automatically>
+
+      <div class="breakdown-payments-container">
+        <p class="breakdown-payments-title">Breakdown of payments:</p>
+        <p class="you-owe-title">You owe {{ "username" }} {{ "X" }}€</p>
+      </div>
+
+      <app-leave-event-button></app-leave-event-button>
     </div>
+
+
     <div class="participants-container" *ngIf="selectedView === 'participants'">
 
     </div>
