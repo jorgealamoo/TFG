@@ -76,5 +76,10 @@ export const routes: Routes = [
     path: 'following/:userId',
     loadComponent: () => import('./pages/following/following.page').then( m => m.FollowingPage),
     canActivate: [authGuard]
+  },
+  {
+    path: 'event-more-info/:id',
+    loadComponent: () => import('./pages/event-more-info/event-more-info.page').then( m => m.EventMoreInfoPage),
+    canActivate: [authGuard]
   }
 ];

@@ -1,0 +1,16 @@
+<app-event-header
+  [showSettings]="true"
+  [title]="title"
+></app-event-header>
+
+<ion-content>
+  <div class="event-more-info-container">
+    <app-shopping-list-participants-switch (viewChange)="onViewChange($event)"></app-shopping-list-participants-switch>
+    <div class="shopping-list-container" *ngIf="selectedView === 'shoppingList'">
+      <p>Hola</p>
+    </div>
+    <div class="participants-container" *ngIf="selectedView === 'participants'">
+
+    </div>
+  </div>
+</ion-content>

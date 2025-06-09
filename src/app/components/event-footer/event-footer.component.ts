@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {IonButton, IonFooter, IonToolbar} from "@ionic/angular/standalone";
 import {NgIf, NgOptimizedImage} from "@angular/common";
 import {SupabaseService} from "../../services/supabase.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-event-footer',
@@ -20,7 +21,10 @@ export class EventFooterComponent implements OnInit {
   joined: boolean = false;
   due: string = "0.00";
 
-  constructor(private supabase: SupabaseService) { }
+  constructor(
+    private supabase: SupabaseService,
+    private router: Router
+  ) { }
 
   async ngOnInit() {
     try {
@@ -80,6 +84,6 @@ export class EventFooterComponent implements OnInit {
   }
 
   goToMoreInfo() {
-    console.log('More info');
+    this.router.navigate(['/event-more-info', this.eventId])
   }
 }

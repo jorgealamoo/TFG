@@ -1,0 +1,10 @@
+<div class="switch-container">
+  <ion-segment [(ngModel)]="selectedView" (ionChange)="onSegmentChange($event)" class="custom-segment">
+    <ion-segment-button value="shoppingList">
+      Shopping List
+    </ion-segment-button>
+    <ion-segment-button value="participants">
+      Participants
+    </ion-segment-button>
+  </ion-segment>
+</div>

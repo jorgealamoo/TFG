@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import {EventHeaderComponent} from "../../components/event-header/event-header.component";
 import {SupabaseService} from "../../services/supabase.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {IonAvatar, IonContent} from "@ionic/angular/standalone";
+import {IonContent} from "@ionic/angular/standalone";
 import {EventImageCarouselComponent} from "../../components/event-image-carousel/event-image-carousel.component";
 import {EventFooterComponent} from "../../components/event-footer/event-footer.component";
 
@@ -13,7 +13,7 @@ import {EventFooterComponent} from "../../components/event-footer/event-footer.c
   templateUrl: './event.page.html',
   styleUrls: ['./event.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, EventHeaderComponent, IonContent, EventImageCarouselComponent, IonAvatar, NgOptimizedImage, EventFooterComponent]
+  imports: [CommonModule, FormsModule, EventHeaderComponent, IonContent, EventImageCarouselComponent, NgOptimizedImage, EventFooterComponent]
 })
 export class EventPage implements OnInit {
   public event: any;
