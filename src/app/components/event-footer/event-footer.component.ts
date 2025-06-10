@@ -44,7 +44,9 @@ export class EventFooterComponent implements OnInit {
       this.joined = event.participants?.includes(userId) ?? false;
 
       if (this.joined) {
-        if (event.split_costs_enabled) {
+        if (userId === event.creator_user) {
+          this.due = '0.00';
+        } else if (event.split_costs_enabled) {
           const participantCount = participants.length || 1;
           const dueAmount = Number(event.total_price) / participantCount;
           this.due = dueAmount.toFixed(2);
