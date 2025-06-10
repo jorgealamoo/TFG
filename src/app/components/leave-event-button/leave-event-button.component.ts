@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {IonButton} from "@ionic/angular/standalone";
 import {NgOptimizedImage} from "@angular/common";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {SupabaseService} from "../../services/supabase.service";
 
 @Component({
@@ -19,8 +19,7 @@ export class LeaveEventButtonComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private supabaseService: SupabaseService,
-    private router: Router
+    private supabaseService: SupabaseService
   ) { }
 
   async ngOnInit() {
