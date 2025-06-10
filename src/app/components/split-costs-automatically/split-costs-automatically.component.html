@@ -19,5 +19,6 @@
     text="Entry price:"
     *ngIf="!splitCostsEnabled"
     [(value)]="entryPrice"
+    (valueChange)="onEntryPriceChange($event)"
   ></app-total-price>
 </div>

@@ -1001,4 +1001,23 @@ export class SupabaseService {
     });
   }
 
+  async updateShoppingList(
+    eventId: string,
+    shoppingList: any[],
+    totalPrice: number,
+    entryPrice: number,
+    splitCostsEnabled: boolean
+  ) {
+    const { data, error } = await this.supabase
+      .from('events')
+      .update({
+        shopping_list: shoppingList,
+        total_price: totalPrice,
+        entry_price: entryPrice,
+        split_costs_enabled: splitCostsEnabled
+      })
+      .eq('id', eventId);
+
+    return { data, error };
+  }
 }

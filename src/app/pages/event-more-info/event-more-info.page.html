@@ -33,6 +33,8 @@
       <app-split-costs-automatically
         [splitCostsEnabled]="splitCostsEnabled"
         [entryPrice]="entryPrice"
+        (splitCostsEnabledChange)="onSplitCostsEnabledChange($event)"
+        (entryPriceChange)="onEntryPriceChange($event)"
       ></app-split-costs-automatically>
 
       <div class="breakdown-payments-container">

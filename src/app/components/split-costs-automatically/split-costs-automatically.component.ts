@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {IonText} from "@ionic/angular/standalone";
 import {NgIf} from "@angular/common";
 import {TotalPriceComponent} from "../total-price/total-price.component";
@@ -16,6 +16,8 @@ import {TotalPriceComponent} from "../total-price/total-price.component";
 export class SplitCostsAutomaticallyComponent {
   @Input() splitCostsEnabled = true;
   @Input() entryPrice: number = 0;
+  @Output() splitCostsEnabledChange = new EventEmitter<boolean>();
+  @Output() entryPriceChange = new EventEmitter<number>();
 
   constructor() { }
 
@@ -23,6 +25,13 @@ export class SplitCostsAutomaticallyComponent {
     this.entryPrice = 0;
     const input = event.target as HTMLInputElement;
     this.splitCostsEnabled = input.checked;
+    this.splitCostsEnabledChange.emit(this.splitCostsEnabled);
+    this.entryPriceChange.emit(this.entryPrice);
+  }
+
+  onEntryPriceChange(newVal: number) {
+    this.entryPrice = newVal;
+    this.entryPriceChange.emit(this.entryPrice);
   }
 
 }

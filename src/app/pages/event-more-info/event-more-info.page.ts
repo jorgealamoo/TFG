@@ -49,6 +49,11 @@ export class EventMoreInfoPage {
   participants!: { username: string; profile_image: string; id: string | null }[];
   participantsLength: number = 0;
 
+  private autoSaveTimer: any;
+  private lastSavedShoppingList: any[] = [];
+  private lastSavedEntryPrice: number = 0;
+  private lastSavedSplitCostsEnabled: boolean = true;
+
   constructor(
     private supabaseService: SupabaseService,
     private route: ActivatedRoute
@@ -68,6 +73,7 @@ export class EventMoreInfoPage {
     this.entryPrice = details.entry_price;
     this.splitCostsEnabled = details.split_costs_enabled;
     this.creatorUsername = details.creatorUsername;
+    this.lastSavedShoppingList = JSON.parse(JSON.stringify(this.shoppingListItems));
 
     this.maxParticipants = details.max_participants;
     this.maxParticipantsEnabled = details.max_participants_enabled;
@@ -82,16 +88,29 @@ export class EventMoreInfoPage {
   updateTotalPrice() {
     const rawTotal = this.shoppingListItems.reduce((sum, item) => sum + (Number(item.price) || 0), 0);
     this.totalPrice = Math.round(rawTotal * 100) / 100;
+    this.scheduleAutoSave();
   }
 
   addItem() {
     this.shoppingListItems.push({ name: '', price: 0 });
     this.updateTotalPrice();
+    this.scheduleAutoSave();
   }
 
   removeItem(index: number) {
     this.shoppingListItems.splice(index, 1);
     this.updateTotalPrice();
+    this.scheduleAutoSave();
+  }
+
+  onSplitCostsEnabledChange(value: boolean) {
+    this.splitCostsEnabled = value;
+    this.scheduleAutoSave();
+  }
+
+  onEntryPriceChange(value: number) {
+    this.entryPrice = value;
+    this.scheduleAutoSave();
   }
 
   calculateDue() {
@@ -105,6 +124,40 @@ export class EventMoreInfoPage {
     } else {
       return 0;
     }
+  }
+
+  scheduleAutoSave() {
+    clearTimeout(this.autoSaveTimer);
+    this.autoSaveTimer = setTimeout(() => {
+      this.autoSaveShoppingList();
+    }, 1500);
+  }
+
+  autoSaveShoppingList() {
+    const hasListChanged = JSON.stringify(this.shoppingListItems) !== JSON.stringify(this.lastSavedShoppingList);
+    const hasEntryPriceChanged = this.entryPrice !== this.lastSavedEntryPrice;
+    const hasSplitCostsChanged = this.splitCostsEnabled !== this.lastSavedSplitCostsEnabled;
+
+    const hasChanges = hasListChanged || hasEntryPriceChanged || hasSplitCostsChanged;
+
+    if (!hasChanges) return;
+
+    this.supabaseService.updateShoppingList(
+      this.eventId,
+      this.shoppingListItems,
+      this.totalPrice,
+      this.entryPrice,
+      this.splitCostsEnabled
+    ).then(({ error }) => {
+        if (!error) {
+          this.lastSavedShoppingList = JSON.parse(JSON.stringify(this.shoppingListItems));
+          this.lastSavedEntryPrice = this.entryPrice;
+          this.lastSavedSplitCostsEnabled = this.splitCostsEnabled;
+          console.log('Auto-save successful');
+        } else {
+          console.error('Error in auto-save:', error.message);
+        }
+      });
   }
 
   addParticipant() {
