@@ -936,4 +936,69 @@ export class SupabaseService {
     };
   }
 
+  async leaveEvent(userId: string | null, eventId: string): Promise<void> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const { data: userData, error: userError } = await this.supabase
+          .from('users')
+          .select('joined_events')
+          .eq('id', userId)
+          .single();
+
+        if (userError) {
+          console.error('Error fetching user joined events:', userError);
+          reject(userError);
+          return;
+        }
+
+        const updatedJoinedEvents = Array.isArray(userData.joined_events)
+          ? userData.joined_events.filter((id: string) => id !== eventId)
+          : [];
+
+        const { error: updateUserError } = await this.supabase
+          .from('users')
+          .update({ joined_events: updatedJoinedEvents })
+          .eq('id', userId);
+
+        if (updateUserError) {
+          console.error('Error updating user joined events:', updateUserError);
+          reject(updateUserError);
+          return;
+        }
+
+        const { data: eventData, error: eventError } = await this.supabase
+          .from('events')
+          .select('participants')
+          .eq('id', eventId)
+          .single();
+
+        if (eventError) {
+          console.error('Error fetching event participants:', eventError);
+          reject(eventError);
+          return;
+        }
+
+        const updatedParticipants = Array.isArray(eventData.participants)
+          ? eventData.participants.filter((id: string) => id !== userId)
+          : [];
+
+        const { error: updateEventError } = await this.supabase
+          .from('events')
+          .update({ participants: updatedParticipants })
+          .eq('id', eventId);
+
+        if (updateEventError) {
+          console.error('Error updating event participants:', updateEventError);
+          reject(updateEventError);
+          return;
+        }
+
+        resolve();
+      } catch (err) {
+        console.error('Unexpected error in leaveEvent:', err);
+        reject(err);
+      }
+    });
+  }
+
 }

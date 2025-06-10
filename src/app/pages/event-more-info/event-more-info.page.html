@@ -59,6 +59,11 @@
           [profileImage]="user.profile_image"
           [id]="user.id"
         ></app-select-user>
+
+        <div class="add-item-button" (click)="addParticipant()">
+          <img src="assets/images/add.png" alt="Add"/>
+          <span>Add participant</span>
+        </div>
       </div>
 
       <ion-text>

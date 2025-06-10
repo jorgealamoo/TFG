@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IonButton} from "@ionic/angular/standalone";
 import {NgOptimizedImage} from "@angular/common";
+import {ActivatedRoute, Router} from "@angular/router";
+import {SupabaseService} from "../../services/supabase.service";
 
 @Component({
   selector: 'app-leave-event-button',
@@ -11,8 +13,23 @@ import {NgOptimizedImage} from "@angular/common";
     NgOptimizedImage
   ]
 })
-export class LeaveEventButtonComponent {
+export class LeaveEventButtonComponent implements OnInit {
+  eventId!: string;
+  userId!: string | null;
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private supabaseService: SupabaseService,
+    private router: Router
+  ) { }
 
+  async ngOnInit() {
+    this.eventId = this.route.snapshot.paramMap.get('id')!;
+    this.userId = await this.supabaseService.getUserId()
+  }
+
+  leaveEvent() {
+    this.supabaseService.leaveEvent(this.userId, this.eventId);
+    window.history.back();
+  }
 }

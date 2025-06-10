@@ -106,4 +106,8 @@ export class EventMoreInfoPage {
       return 0;
     }
   }
+
+  addParticipant() {
+
+  }
 }

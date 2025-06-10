@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {EventHeaderComponent} from "../../components/event-header/event-header.component";
@@ -15,7 +15,7 @@ import {EventFooterComponent} from "../../components/event-footer/event-footer.c
   standalone: true,
   imports: [CommonModule, FormsModule, EventHeaderComponent, IonContent, EventImageCarouselComponent, NgOptimizedImage, EventFooterComponent]
 })
-export class EventPage implements OnInit {
+export class EventPage {
   public event: any;
   public imageUrls: string[] = [];
   public creatorUsername: string | null = null;
@@ -28,7 +28,7 @@ export class EventPage implements OnInit {
   ) {
   }
 
-  async ngOnInit() {
+  async ionViewWillEnter() {
     this.route.paramMap.subscribe(async (params) => {
       const eventId = params.get('id');
       if (eventId) {
