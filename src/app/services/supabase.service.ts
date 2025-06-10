@@ -871,4 +871,69 @@ export class SupabaseService {
       imageUrls: event.images ?? []
     }));
   }
+
+  async getEventMoreInfo(eventId: string): Promise<{
+    title: string;
+    shopping_list: { name: string; price: number }[];
+    total_price: number;
+    entry_price: number;
+    split_costs_enabled: boolean;
+    max_participants_enabled: boolean;
+    max_participants: number;
+    participants: { username: string; profile_image: string; id: string | null }[];
+    creatorUsername: string;
+    creatorUserId: string;
+  } | null> {
+    const { data: event, error: eventErr } = await this.supabase
+      .from('events')
+      .select(`title, shopping_list, total_price, entry_price, split_costs_enabled, creator_user,
+      max_participants_enabled, max_participants, participants`)
+      .eq('id', eventId)
+      .single();
+
+    if (eventErr || !event) {
+      console.error('Error fetching event:', eventErr);
+      return null;
+    }
+
+    const { data: user, error: userErr } = await this.supabase
+      .from('users')
+      .select('username')
+      .eq('id', event.creator_user)
+      .single();
+
+    if (userErr || !user) {
+      console.error('Error fetching creator user:', userErr);
+      return null;
+    }
+
+    let participantsData: { username: string; profile_image: string; id: string | null }[] = [];
+    if (event.participants && event.participants.length > 0) {
+      const { data: participants, error: participantsErr } = await this.supabase
+        .from('users')
+        .select('username, profile_image, id')
+        .in('id', event.participants);
+
+      if (participantsErr) {
+        console.error('Error fetching participants:', participantsErr);
+        return null;
+      }
+
+      participantsData = participants || [];
+    }
+
+    return {
+      title: event.title,
+      shopping_list: event.shopping_list,
+      total_price: event.total_price,
+      entry_price: event.entry_price,
+      split_costs_enabled: event.split_costs_enabled,
+      max_participants_enabled: event.max_participants_enabled,
+      max_participants: event.max_participants,
+      participants: participantsData,
+      creatorUsername: user.username,
+      creatorUserId: event.creator_user
+    };
+  }
+
 }

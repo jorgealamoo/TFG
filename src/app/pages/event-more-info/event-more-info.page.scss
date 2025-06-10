@@ -103,6 +103,10 @@ ion-text {
   }
 }
 
+app-search-bar {
+  margin-top: 15px;
+}
+
 app-search-bar, app-shareable-link {
   display: flex;
   align-items: center;
@@ -110,7 +114,7 @@ app-search-bar, app-shareable-link {
 }
 
 .select-users {
-  height: 50vh;
+  height: 40vh;
   overflow-y: auto;
   margin-top: 15px;
   margin-bottom: 20px;
