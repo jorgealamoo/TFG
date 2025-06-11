@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {IonCheckbox} from "@ionic/angular/standalone";
 import {FormsModule} from "@angular/forms";
 import {Router} from "@angular/router";
@@ -16,11 +16,17 @@ export class SelectUserComponent {
   @Input() username: string = "Username";
   @Input() profileImage!: string | null;
   @Input() id: string | null = null;
-  isSelected: boolean = false;
+  @Input() isSelected: boolean = false;
+
+  @Output() selectionChange = new EventEmitter<{ id: string | null; selected: boolean }>();
 
   constructor(private router: Router) { }
 
   goToUserProfile() {
     this.router.navigate(['/profile', this.id]);
+  }
+
+  onCheckboxChange() {
+    this.selectionChange.emit({ id: this.id, selected: this.isSelected });
   }
 }

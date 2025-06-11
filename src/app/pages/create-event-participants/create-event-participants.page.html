@@ -15,19 +15,26 @@
     <h2 class="invite-title">Invite</h2>
   </ion-text>
 
-  <app-search-bar></app-search-bar>
+  <app-search-bar (searchChange)="onSearch($event)"></app-search-bar>
 
   <div class="select-users">
-    <app-select-user></app-select-user>
-    <app-select-user></app-select-user>
-    <app-select-user></app-select-user>
-    <app-select-user></app-select-user>
-    <app-select-user></app-select-user>
-    <app-select-user></app-select-user>
-    <app-select-user></app-select-user>
-    <app-select-user></app-select-user>
-    <app-select-user></app-select-user>
-    <app-select-user></app-select-user>
+    <app-select-user
+      *ngFor="let user of selectedUsers"
+      [username]="user.username"
+      [id]="user.id"
+      [profileImage]="user.profile_image"
+      [isSelected]="true"
+      (selectionChange)="onUserSelectionChange($event, user)"
+    ></app-select-user>
+
+    <app-select-user
+      *ngFor="let user of foundUsers"
+      [username]="user.username"
+      [id]="user.id"
+      [profileImage]="user.profile_image"
+      [isSelected]="false"
+      (selectionChange)="onUserSelectionChange($event, user)"
+    ></app-select-user>
   </div>
 
   <ion-text>

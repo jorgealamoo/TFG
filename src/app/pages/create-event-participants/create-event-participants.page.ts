@@ -22,6 +22,9 @@ export class CreateEventParticipantsPage implements OnInit {
   maxParticipants: number = 20;
   maxParticipantsEnabled: boolean = true;
   eventUuid: string = '';
+  foundUsers: any[] = [];
+  selectedUsers: any[] = [];
+  userId: string | null = null;
 
   constructor(
     private eventFormDataService: EventFormDataService,
@@ -29,12 +32,16 @@ export class CreateEventParticipantsPage implements OnInit {
     private router: Router,
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     const eventData = this.eventFormDataService.getData();
     if (!eventData.uuid) {
       this.router.navigate(['/create-event']);
     }
     this.eventUuid = eventData.uuid;
+    this.userId = await this.supabaseService.getUserId();
+    if (this.userId) {
+      this.foundUsers = await this.supabaseService.getFollowingByUserId(this.userId);
+    }
   }
 
   finalizeEventCreation() {
@@ -50,5 +57,27 @@ export class CreateEventParticipantsPage implements OnInit {
     this.supabaseService.createEvent(eventData)
     this.router.navigate([`/my-profile`]);
     console.log(this.eventFormDataService.getData());
+  }
+
+  async onSearch(searchText: string) {
+    const results = await this.supabaseService.searchUsersByUsername(searchText);
+
+    const selectedIds = new Set(this.selectedUsers.map(u => u.id));
+    this.foundUsers = results.filter(user => !selectedIds.has(user.id));
+  }
+
+  onUserSelectionChange(event: { selected: boolean }, user: any) {
+    if (event.selected) {
+      if (!this.selectedUsers.find(u => u.id === user.id)) {
+        this.selectedUsers.push(user);
+        this.foundUsers = this.foundUsers.filter(u => u.id !== user.id);
+      }
+    } else {
+      this.selectedUsers = this.selectedUsers.filter(u => u.id !== user.id);
+
+      if (!this.foundUsers.find(u => u.id === user.id)) {
+        this.foundUsers.push(user);
+      }
+    }
   }
 }

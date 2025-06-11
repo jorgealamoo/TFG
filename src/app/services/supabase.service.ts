@@ -1020,4 +1020,21 @@ export class SupabaseService {
 
     return { data, error };
   }
+
+  async searchUsersByUsername(query: string): Promise<any[]> {
+    if (!query || query.trim() === '') return [];
+
+    const { data, error } = await this.supabase
+      .from('users')
+      .select('id, username, profile_image')
+      .ilike('username', `%${query.trim()}%`)
+
+    if (error) {
+      console.error('Error searching users:', error);
+      return [];
+    }
+
+    return data || [];
+  }
+
 }
