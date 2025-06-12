@@ -63,7 +63,7 @@ export class CreateEventParticipantsPage implements OnInit {
       this.userId
     )
 
-    this.router.navigate([`/my-profile`]);
+    this.router.navigate([`/create-event`]);
     console.log(this.eventFormDataService.getData());
   }
 
