@@ -1037,4 +1037,43 @@ export class SupabaseService {
     return data || [];
   }
 
+  async sendEventInvitations(
+    invitedUsers: any[],
+    eventId: string,
+    eventTitle: string,
+    invitedById: string | null
+  ): Promise<void> {
+    const { data: invitedByUser, error: userError } = await this.supabase
+      .from('users')
+      .select('username')
+      .eq('id', invitedById)
+      .single();
+
+    if (userError || !invitedByUser) {
+      console.error('Error fetching inviter username:', userError);
+      return;
+    }
+
+    const invitedByUsername = invitedByUser.username;
+
+    const notifications = invitedUsers.map(user => ({
+      user_id: user.id,
+      type: 'event_invitation',
+      data: {
+        event_id: eventId,
+        invited_by: invitedById,
+        message: `🎉 ${invitedByUsername} invited you to "${eventTitle}".`
+      },
+      is_read: false
+    }));
+
+    const { error } = await this.supabase
+      .from('notifications')
+      .insert(notifications);
+
+    if (error) {
+      console.error('Error sending invitations:', error);
+    }
+  }
+
 }

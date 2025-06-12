@@ -44,7 +44,7 @@ export class CreateEventParticipantsPage implements OnInit {
     }
   }
 
-  finalizeEventCreation() {
+  async finalizeEventCreation() {
     if (this.maxParticipantsEnabled) {
       this.eventFormDataService.setData("maxParticipants", this.maxParticipants);
       this.eventFormDataService.setData("maxParticipantsEnabled", true);
@@ -55,6 +55,14 @@ export class CreateEventParticipantsPage implements OnInit {
 
     const eventData = this.eventFormDataService.getData();
     this.supabaseService.createEvent(eventData)
+
+    await this.supabaseService.sendEventInvitations(
+      this.selectedUsers,
+      eventData.uuid,
+      eventData.title,
+      this.userId
+    )
+
     this.router.navigate([`/my-profile`]);
     console.log(this.eventFormDataService.getData());
   }
