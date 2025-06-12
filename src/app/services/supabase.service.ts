@@ -1024,10 +1024,22 @@ export class SupabaseService {
   async searchUsersByUsername(query: string): Promise<any[]> {
     if (!query || query.trim() === '') return [];
 
+    const {
+      data: { user: currentUser },
+      error: authError
+    } = await this.supabase.auth.getUser();
+
+    if (authError) {
+      console.error('Error fetching authenticated user:', authError);
+      return [];
+    }
+    if (!currentUser) return [];
+
     const { data, error } = await this.supabase
       .from('users')
       .select('id, username, profile_image')
       .ilike('username', `%${query.trim()}%`)
+      .neq('id', currentUser.id)
 
     if (error) {
       console.error('Error searching users:', error);
