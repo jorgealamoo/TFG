@@ -1,0 +1,15 @@
+<div class="notification-container">
+  <p>{{ notificationText }}</p>
+
+  <ion-buttons class="accept-decline-buttons">
+    <ion-button class="accept-button" (click)="onAccept()">
+      <img src="assets/images/check.png" alt="check">
+      <span>Accept</span>
+    </ion-button>
+
+    <ion-button class="decline-button" (click)="onDecline()">
+      <img src="assets/images/cancel_orange.png" alt="decline">
+      <span>Decline</span>
+    </ion-button>
+  </ion-buttons>
+</div>

@@ -1,0 +1,58 @@
+.notification-container {
+  margin: 20px;
+  padding-bottom: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom: 1px solid #3BADEC;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+
+  p {
+    margin: 0;
+    font-weight: 500;
+    text-indent: -30px;
+    padding-left: 30px;
+  }
+
+  .accept-decline-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+  }
+
+  .accept-button {
+    img {
+      padding: 0;
+      margin: 0;
+      width: 27px;
+      height: 27px;
+    }
+
+    span {
+      padding-left: 5px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      color: #3B82F6;
+      font-size: 18px;
+      text-transform: none;
+    }
+  }
+
+  .decline-button {
+    img {
+      padding: 0;
+      margin: 0;
+      width: 27px;
+      height: 27px;
+    }
+
+    span {
+      padding-left: 5px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      color: #FE8430;
+      font-size: 18px;
+      text-transform: none;
+    }
+  }
+}

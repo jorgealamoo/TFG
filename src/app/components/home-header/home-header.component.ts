@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {IonButton, IonButtons, IonHeader, IonIcon, IonTitle, IonToolbar} from "@ionic/angular/standalone";
+import { Component } from '@angular/core';
+import {IonButton, IonButtons, IonHeader, IonTitle, IonToolbar} from "@ionic/angular/standalone";
 import {NgOptimizedImage} from "@angular/common";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home-header',
@@ -15,14 +16,12 @@ import {NgOptimizedImage} from "@angular/common";
     NgOptimizedImage
   ]
 })
-export class HomeHeaderComponent  implements OnInit {
+export class HomeHeaderComponent {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   openNotifications() {
-    console.log('Notifications opened');
+    this.router.navigate(['/notifications']);
   }
-
-  ngOnInit() {}
 
 }

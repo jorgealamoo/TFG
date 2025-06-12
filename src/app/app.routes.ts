@@ -81,5 +81,9 @@ export const routes: Routes = [
     path: 'event-more-info/:id',
     loadComponent: () => import('./pages/event-more-info/event-more-info.page').then( m => m.EventMoreInfoPage),
     canActivate: [authGuard]
+  },
+  {
+    path: 'notifications',
+    loadComponent: () => import('./pages/notifications/notifications.page').then( m => m.NotificationsPage)
   }
 ];
