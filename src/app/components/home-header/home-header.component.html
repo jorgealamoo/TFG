@@ -3,7 +3,8 @@
     <ion-title>Evnet</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="openNotifications()">
-        <img ngSrc="assets/images/bell.png" alt="Notifications" height="240" width="240"/>
+        <img ngSrc="assets/images/bell.png" alt="Notifications" height="240" width="240" *ngIf="!hasUnread"/>
+        <img ngSrc="assets/images/bell-ringing.png" alt="Notifications" height="240" width="240" *ngIf="hasUnread"/>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

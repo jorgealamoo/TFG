@@ -1133,4 +1133,19 @@ export class SupabaseService {
     }
   }
 
+  async hasUnreadNotifications(userId: string): Promise<boolean> {
+    const { count, error } = await this.supabase
+      .from('notifications')
+      .select('*', { head: true, count: 'exact' })
+      .eq('user_id', userId)
+      .eq('is_read', false);
+
+    if (error) {
+      console.error('Error checking unread notifications:', error);
+      return false;
+    }
+
+    return (count ?? 0) > 0;
+  }
+
 }

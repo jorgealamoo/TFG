@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {IonButton, IonButtons, IonHeader, IonTitle, IonToolbar} from "@ionic/angular/standalone";
-import {NgOptimizedImage} from "@angular/common";
+import {NgIf, NgOptimizedImage} from "@angular/common";
 import {Router} from "@angular/router";
 
 @Component({
@@ -13,10 +13,12 @@ import {Router} from "@angular/router";
     IonTitle,
     IonButtons,
     IonButton,
-    NgOptimizedImage
+    NgOptimizedImage,
+    NgIf
   ]
 })
 export class HomeHeaderComponent {
+  @Input() hasUnread: boolean = false;
 
   constructor(private router: Router) { }
 

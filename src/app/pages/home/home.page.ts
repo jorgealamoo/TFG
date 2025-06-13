@@ -20,6 +20,7 @@ export class HomePage implements OnInit {
   offset: number = 0;
   userId: string | null = null;
   loading: boolean = false;
+  hasUnread: boolean = false;
 
   constructor(private supabaseService: SupabaseService) { }
 
@@ -59,6 +60,7 @@ export class HomePage implements OnInit {
     this.userId = await this.supabaseService.getUserId();
     if (this.userId) {
       await this.loadMoreEvents();
+      this.hasUnread = await this.supabaseService.hasUnreadNotifications(this.userId)
     }
   }
 
