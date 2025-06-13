@@ -54,7 +54,7 @@ export class CreateEventParticipantsPage implements OnInit {
     }
 
     const eventData = this.eventFormDataService.getData();
-    this.supabaseService.createEvent(eventData)
+    await this.supabaseService.createEvent(eventData)
 
     await this.supabaseService.sendEventInvitations(
       this.selectedUsers,
