@@ -18,6 +18,7 @@ import {Router} from "@angular/router";
 })
 export class EventFooterComponent implements OnInit {
   @Input() eventId!: string;
+  event: any = null;
   joined: boolean = false;
   due: string = "0.00";
 
@@ -34,24 +35,24 @@ export class EventFooterComponent implements OnInit {
         return;
       }
 
-      const event = await this.supabase.getEventById(this.eventId);
-      if (!event) {
+      this.event = await this.supabase.getEventById(this.eventId);
+      if (!this.event) {
         console.error(`Event with ID ${this.eventId} not found.`);
         return;
       }
 
-      const participants = event.participants ?? [];
-      this.joined = event.participants?.includes(userId) ?? false;
+      const participants = this.event.participants ?? [];
+      this.joined = this.event.participants?.includes(userId) ?? false;
 
       if (this.joined) {
-        if (userId === event.creator_user) {
+        if (userId === this.event.creator_user) {
           this.due = '0.00';
-        } else if (event.split_costs_enabled) {
+        } else if (this.event.split_costs_enabled) {
           const participantCount = participants.length || 1;
-          const dueAmount = Number(event.total_price) / participantCount;
+          const dueAmount = Number(this.event.total_price) / participantCount;
           this.due = dueAmount.toFixed(2);
         } else {
-          this.due = Number(event.entry_price).toFixed(2);
+          this.due = Number(this.event.entry_price).toFixed(2);
         }
       }
     } catch (error) {
@@ -72,7 +73,9 @@ export class EventFooterComponent implements OnInit {
 
       const updatedEvent = await this.supabase.getEventById(this.eventId);
       const updatedParticipants = updatedEvent.participants ?? [];
-      if (updatedEvent.split_costs_enabled) {
+      if (userId === this.event.creator_user) {
+        this.due = '0.00';
+      } else if (updatedEvent.split_costs_enabled) {
         const dueAmount = Number(updatedEvent.total_price) / (updatedParticipants.length || 1);
         this.due = dueAmount.toFixed(2);
       } else {

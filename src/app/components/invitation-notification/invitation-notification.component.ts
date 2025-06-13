@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {IonButton, IonButtons} from "@ionic/angular/standalone";
 import {NgIf} from "@angular/common";
 import {Router} from "@angular/router";
