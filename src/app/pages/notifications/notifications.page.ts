@@ -6,6 +6,7 @@ import {HeaderComponent} from "../../components/header/header.component";
 import {
   InvitationNotificationComponent
 } from "../../components/invitation-notification/invitation-notification.component";
+import {SupabaseService} from "../../services/supabase.service";
 
 @Component({
   selector: 'app-notifications',
@@ -15,11 +16,14 @@ import {
   imports: [IonContent, CommonModule, FormsModule, HeaderComponent, InvitationNotificationComponent]
 })
 export class NotificationsPage {
+  notifications: any[] = [];
 
-  constructor() { }
+  constructor(
+    private supabaseService: SupabaseService
+  ) { }
 
-  ionViewWillEnter() {
-
+  async ionViewWillEnter() {
+    this.notifications = await this.supabaseService.getNotificationsForUser();
   }
 
 }

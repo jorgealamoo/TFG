@@ -1088,4 +1088,49 @@ export class SupabaseService {
     }
   }
 
+  async getNotificationsForUser(): Promise<any[]> {
+    const user = await this.supabase.auth.getUser();
+    const userId = user?.data?.user?.id;
+
+    if (!userId) {
+      console.error('No authenticated user found');
+      return [];
+    }
+
+    const { data, error } = await this.supabase
+      .from('notifications')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching notifications:', error);
+      return [];
+    }
+
+    return data || [];
+  }
+
+  async markNotificationAsRead(notificationId: string): Promise<void> {
+    const { error } = await this.supabase
+      .from('notifications')
+      .update({ is_read: true })
+      .eq('id', notificationId);
+
+    if (error) {
+      console.error(`Error marking notification ${notificationId} as read:`, error);
+    }
+  }
+
+  async updateNotificationType(notificationId: string, newType: string): Promise<void> {
+    const { error } = await this.supabase
+      .from('notifications')
+      .update({ type: newType })
+      .eq('id', notificationId);
+
+    if (error) {
+      console.error(`Error updating type of notification ${notificationId} to ${newType}:`, error);
+    }
+  }
+
 }

@@ -1,5 +1,17 @@
 <app-header title="Notifications" [showBack]="true"></app-header>
 
 <ion-content>
-  <app-invitation-notification></app-invitation-notification>
+  <ng-container *ngIf="notifications.length; else noNotifications">
+    <app-invitation-notification
+      *ngFor="let notification of notifications"
+      [eventId]="notification.data.event_id"
+      [notificationId]="notification.id"
+      [notificationData]="notification.data"
+      [notificationType]="notification.type"
+    ></app-invitation-notification>
+  </ng-container>
+
+  <ng-template #noNotifications>
+    <p class="no-notifications-text">You have no notifications yet.</p>
+  </ng-template>
 </ion-content>

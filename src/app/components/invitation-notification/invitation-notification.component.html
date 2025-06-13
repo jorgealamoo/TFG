@@ -1,7 +1,11 @@
-<div class="notification-container">
-  <p>{{ notificationText }}</p>
+<div class="notification-container" (click)="goToEvent()">
+  <p>{{ notificationData.message }}</p>
 
-  <ion-buttons class="accept-decline-buttons">
+  <ion-buttons
+    class="accept-decline-buttons"
+    *ngIf="notificationType === 'event_invitation'"
+    (click)="$event.stopPropagation()"
+  >
     <ion-button class="accept-button" (click)="onAccept()">
       <img src="assets/images/check.png" alt="check">
       <span>Accept</span>
@@ -12,4 +16,6 @@
       <span>Decline</span>
     </ion-button>
   </ion-buttons>
+
+  <span class="event-accepted" *ngIf="notificationType === 'event_invitation_accepted'">Accepted!</span>
 </div>

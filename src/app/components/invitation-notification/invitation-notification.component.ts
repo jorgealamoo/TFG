@@ -1,5 +1,8 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IonButton, IonButtons} from "@ionic/angular/standalone";
+import {NgIf} from "@angular/common";
+import {Router} from "@angular/router";
+import {SupabaseService} from "../../services/supabase.service";
 
 @Component({
   selector: 'app-invitation-notification',
@@ -7,21 +10,56 @@ import {IonButton, IonButtons} from "@ionic/angular/standalone";
   styleUrls: ['./invitation-notification.component.scss'],
   imports: [
     IonButton,
-    IonButtons
+    IonButtons,
+    NgIf
   ]
 })
-export class InvitationNotificationComponent {
-  @Input() notificationText: string = 'Notification';
-  @Output() acceptClicked = new EventEmitter<void>();
-  @Output() declineClicked = new EventEmitter<void>();
+export class InvitationNotificationComponent implements OnInit {
+  userId: string | null = null;
 
-  constructor() { }
+  @Input() eventId: string | null = null;
+  @Input() notificationId: string = "";
+  @Input() notificationData: any;
+  @Input() notificationType: string = "";
 
-  onAccept() {
-    this.acceptClicked.emit();
+  constructor(
+    private router: Router,
+    private supabaseService: SupabaseService
+  ) { }
+
+  async ngOnInit() {
+    await this.supabaseService.markNotificationAsRead(this.notificationId)
+
+    if (this.notificationType === "event_invitation"){
+      this.eventId = this.notificationData.event_id;
+      this.userId = await this.supabaseService.getUserId()
+    }
   }
 
-  onDecline() {
-    this.declineClicked.emit();
+  onAccept() {
+    if (this.eventId && this.userId) {
+      this.supabaseService.joinEvent(this.userId, this.eventId)
+        .then(async () => {
+          this.notificationType = "event_invitation_accepted";
+          await this.supabaseService.updateNotificationType(this.notificationId, this.notificationType)
+          console.log("Successfully joined event:", this.eventId);
+        })
+        .catch(error => {
+          console.error('Error joining event:', error);
+        });
+    }
+  }
+
+  async onDecline() {
+    if (this.eventId && this.userId) {
+      this.notificationType = "event_invitation_declined";
+      await this.supabaseService.updateNotificationType(this.notificationId, this.notificationType)
+    }
+  }
+
+  goToEvent() {
+    if (this.eventId) {
+      this.router.navigate(['event', this.eventId]);
+    }
   }
 }
