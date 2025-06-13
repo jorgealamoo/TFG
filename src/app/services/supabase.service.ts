@@ -1148,4 +1148,19 @@ export class SupabaseService {
     return (count ?? 0) > 0;
   }
 
+  async getEventTitleById(eventId: string): Promise<string | null> {
+    const { data, error } = await this.supabase
+      .from('events')
+      .select('title')
+      .eq('id', eventId)
+      .single();
+
+    if (error) {
+      console.error('Error fetching event title:', error.message);
+      return null;
+    }
+
+    return data?.title ?? null;
+  }
+
 }

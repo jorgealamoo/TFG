@@ -18,7 +18,7 @@ import {SearchBarComponent} from "../../components/search-bar/search-bar.compone
 import {SelectUserComponent} from "../../components/select-user/select-user.component";
 import {ShareableLinkComponent} from "../../components/shareable-link/shareable-link.component";
 import {SupabaseService} from "../../services/supabase.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-event-more-info',
@@ -56,7 +56,8 @@ export class EventMoreInfoPage {
 
   constructor(
     private supabaseService: SupabaseService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   async ionViewWillEnter() {
@@ -161,6 +162,6 @@ export class EventMoreInfoPage {
   }
 
   addParticipant() {
-
+    this.router.navigate(['/add-participants', this.eventId]);
   }
 }

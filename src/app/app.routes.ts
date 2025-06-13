@@ -84,6 +84,12 @@ export const routes: Routes = [
   },
   {
     path: 'notifications',
-    loadComponent: () => import('./pages/notifications/notifications.page').then( m => m.NotificationsPage)
+    loadComponent: () => import('./pages/notifications/notifications.page').then( m => m.NotificationsPage),
+    canActivate: [authGuard]
+  },
+  {
+    path: 'add-participants/:id',
+    loadComponent: () => import('./pages/add-participants/add-participants.page').then( m => m.AddParticipantsPage),
+    canActivate: [authGuard]
   }
 ];
