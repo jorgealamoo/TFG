@@ -65,7 +65,7 @@ export class CreateEventParticipantsPage implements OnInit {
 
     if (this.userId) await this.supabaseService.joinEvent(this.userId, eventData.uuid);
 
-    this.router.navigate([`/create-event`]);
+    this.router.navigate([`/home`]);
     console.log(this.eventFormDataService.getData());
   }
 
