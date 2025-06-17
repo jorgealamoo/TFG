@@ -23,7 +23,12 @@ export class NotificationsPage {
   ) { }
 
   async ionViewWillEnter() {
-    this.notifications = await this.supabaseService.getNotificationsForUser();
+    try {
+      this.notifications = await this.supabaseService.getNotificationsForUser();
+    } catch (error) {
+      console.error(error);
+      this.notifications = [];
+    }
   }
 
 }
