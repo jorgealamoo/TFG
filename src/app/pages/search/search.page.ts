@@ -20,7 +20,7 @@ export class SearchPage {
 
   searchEvent: boolean = true;
   searchResults: any[] = [];
-  limit: number = 2;
+  limit: number = 5;
   offset: number = 0;
   loading: boolean = false;
   currentQuery: string = '';
@@ -57,7 +57,7 @@ export class SearchPage {
     this.loading = true;
 
     try {
-      let newEvents: any[] = [];
+      let newEvents: any[];
 
       if (this.currentQuery) {
         newEvents = await this.supabaseService.searchEventsPaginated(
