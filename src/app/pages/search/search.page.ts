@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {IonContent, IonInfiniteScroll, IonInfiniteScrollContent} from '@ionic/angular/standalone';
@@ -16,9 +16,11 @@ import {EventPostComponent} from "../../components/event-post/event-post.compone
   imports: [IonContent, CommonModule, FormsModule, FooterComponent, HeaderComponent, SearchBarComponent, EventPostComponent, IonInfiniteScroll, IonInfiniteScrollContent]
 })
 export class SearchPage {
+  @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
+
   searchEvent: boolean = true;
   searchResults: any[] = [];
-  limit: number = 5;
+  limit: number = 2;
   offset: number = 0;
   loading: boolean = false;
   currentQuery: string = '';
@@ -26,59 +28,63 @@ export class SearchPage {
   constructor(private supabaseService: SupabaseService) { }
 
   async ionViewWillEnter() {
-    this.loading = true;
-    try {
-      this.searchResults = await this.supabaseService.getRecommendedEvents(this.limit, 0);
-      this.currentQuery = '';
-      this.offset = this.searchResults.length;
-    } catch (error) {
-      console.error('Error loading recommended events:', error);
-    }
-    this.loading = false;
+    this.searchResults = [];
+    this.offset = 0;
+    this.currentQuery = '';
+    this.infiniteScroll.disabled = false;
+    await this.loadMoreEvents();
   }
 
   async onSearch(query: string) {
-    if (!query) {
-      this.searchResults = [];
+    this.currentQuery = query.trim();
+    this.offset = 0;
+    this.searchResults = [];
+    this.infiniteScroll.disabled = false;
+
+    if (!this.currentQuery) {
+      this.infiniteScroll.disabled = true;
       return;
     }
 
-    this.currentQuery = query;
-    this.offset = 0;
-    this.loading = true;
-
-    if (this.searchEvent) {
-      try {
-        this.searchResults = await this.supabaseService.searchEventsPaginated(query, this.limit, this.offset);
-      } catch (error) {
-        console.error('Error loading search results:', error);
-      }
-    }
-
-    this.loading = false;
+    await this.loadMoreEvents();
   }
 
-  async loadMoreEvents(event: any) {
-    if (this.loading || !this.currentQuery) {
-      event.target.complete();
+  async loadMoreEvents(event?: any) {
+    if (this.loading) {
+      event?.target.complete();
       return;
     }
-
     this.loading = true;
-    this.offset += this.limit;
 
     try {
-      const newEvents = await this.supabaseService.searchEventsPaginated(this.currentQuery, this.limit, this.offset);
-      this.searchResults = [...this.searchResults, ...newEvents];
+      let newEvents: any[] = [];
+
+      if (this.currentQuery) {
+        newEvents = await this.supabaseService.searchEventsPaginated(
+          this.currentQuery,
+          this.limit,
+          this.offset
+        );
+      } else {
+        newEvents = await this.supabaseService.getRecommendedEvents(
+          this.limit,
+          this.offset
+        );
+      }
+
+      this.searchResults.push(...newEvents);
+      this.offset += newEvents.length;
 
       if (newEvents.length < this.limit) {
-        event.target.disabled = true;
+        this.infiniteScroll.disabled = true;
+      } else {
+        this.infiniteScroll.disabled = false;
       }
     } catch (error) {
       console.error('Error loading more events:', error);
     }
 
     this.loading = false;
-    event.target.complete();
+    event?.target.complete();
   }
 }

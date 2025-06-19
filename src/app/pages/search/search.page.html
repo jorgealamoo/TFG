@@ -3,7 +3,7 @@
 <ion-content>
   <div class="search-container">
     <div class="search-bars-container">
-      <app-search-bar (searchChange)="onSearch($event)"></app-search-bar>
+      <app-search-bar [value]="currentQuery" (searchChange)="onSearch($event)"></app-search-bar>
     </div>
 
     <div class="search-results-container">
