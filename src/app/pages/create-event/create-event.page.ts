@@ -29,7 +29,7 @@ export class CreateEventPage {
   form = new FormGroup({
     title: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
-    categories: new FormControl([]),
+    categories: new FormControl([] as string[]),
     location: new FormControl('', [Validators.required]),
     date: new FormControl('', [Validators.required]),
     hour: new FormControl('', [Validators.required]),
