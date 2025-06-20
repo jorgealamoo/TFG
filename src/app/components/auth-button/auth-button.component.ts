@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {IonButton} from "@ionic/angular/standalone";
 
 @Component({
@@ -9,7 +9,7 @@ import {IonButton} from "@ionic/angular/standalone";
     IonButton
   ]
 })
-export class AuthButtonComponent  implements OnInit {
+export class AuthButtonComponent {
 
   @Input() label: string = "Submit";
   @Input() disabled: boolean = false;
@@ -20,7 +20,5 @@ export class AuthButtonComponent  implements OnInit {
   }
 
   constructor() { }
-
-  ngOnInit() {}
 
 }
