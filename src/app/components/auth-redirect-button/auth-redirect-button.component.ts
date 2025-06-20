@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {Router} from "@angular/router";
 import {IonButton} from "@ionic/angular/standalone";
 
@@ -10,7 +10,7 @@ import {IonButton} from "@ionic/angular/standalone";
     IonButton
   ]
 })
-export class AuthRedirectButtonComponent  implements OnInit {
+export class AuthRedirectButtonComponent {
 
   @Input() redirectTo: 'login' | 'signup' = 'login';
 
@@ -23,7 +23,5 @@ export class AuthRedirectButtonComponent  implements OnInit {
       this.router.navigate(['/login']);
     }
   }
-
-  ngOnInit() {}
 
 }
