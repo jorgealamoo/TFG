@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {IonInput, IonItem} from "@ionic/angular/standalone";
 import {FormControl, ReactiveFormsModule} from "@angular/forms";
 
@@ -12,14 +12,12 @@ import {FormControl, ReactiveFormsModule} from "@angular/forms";
     ReactiveFormsModule
   ]
 })
-export class SignupInputComponent  implements OnInit {
+export class SignupInputComponent {
   @Input() control!: FormControl;
   @Input() type!: string;
   @Input() placeholder: string = "Text";
   @Input() name: string = "";
 
   constructor() { }
-
-  ngOnInit() {}
 
 }
