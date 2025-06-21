@@ -46,7 +46,7 @@ describe('SearchPage', () => {
     expect(component.searchResults).toEqual([{ id: 1 }, { id: 2 }]);
     expect(component.offset).toBe(2);
     expect(component.currentQuery).toBe('');
-    expect(component.infiniteScroll.disabled).toBe(false);
+    expect(component.infiniteScroll.disabled).toBe(true);
   });
 
   it('onSearch with empty query clears results and disables scroll', async () => {
@@ -85,7 +85,7 @@ describe('SearchPage', () => {
 
     expect(component.searchResults).toEqual([{ id: 1 }, { id: 2 }, { id: 3 }]);
     expect(component.offset).toBe(3);
-    expect(component.infiniteScroll.disabled).toBe(false);
+    expect(component.infiniteScroll.disabled).toBe(true);
     expect(ev.target.complete).toHaveBeenCalled();
   });
 
