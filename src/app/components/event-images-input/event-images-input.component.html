@@ -1,44 +1,12 @@
-<!--
-<div class="image-upload-container" (click)="triggerFileInput()">
-  <img src="assets/images/add-images.png" alt="Add Image" />
-  <p>Add Images</p>
-  <input #fileInput type="file" (change)="onFileChange($event)" accept="image/*" multiple hidden />
-</div>
-
-<div class="image-preview-container" *ngIf="imagesPreview.length > 0">
-  <div class="image-preview" *ngFor="let image of imagesPreview; let i = index">
-    <img [src]="image" alt="preview" />
-    <button (click)="removeImage(i)">✕</button>
-  </div>
-</div>
--->
-
-<!--
-<div class="image-upload-container" *ngIf="imagesPreview.length === 0" (click)="triggerFileInput()">
-  <img src="assets/images/add-images.png" alt="Add Image" />
-  <p>Add Images</p>
-  <input #fileInput type="file" (change)="onFileChange($event)" accept="image/*" multiple hidden />
-</div>
-
-<div class="image-preview-container" *ngIf="imagesPreview.length > 0">
-  <div class="image-preview" *ngFor="let image of imagesPreview; let i = index">
-    <img [src]="image" alt="preview" />
-    <button (click)="removeImage(i)">✕</button>
-  </div>
-</div>
--->
-
-<!-- CONTENEDOR DE IMÁGENES + INPUT PARA AÑADIR MÁS -->
 <div class="image-preview-container" *ngIf="imagesPreview.length > 0" (click)="triggerFileInput()">
   <div class="image-preview" *ngFor="let image of imagesPreview; let i = index" (click)="$event.stopPropagation()">
     <img [src]="image" alt="preview" />
     <button (click)="removeImage(i); $event.stopPropagation()">✕</button>
   </div>
-  <!-- Input para seguir subiendo imágenes -->
+
   <input #fileInput type="file" (change)="onFileChange($event)" accept="image/*" multiple hidden />
 </div>
 
-<!-- SI NO HAY IMÁGENES, SE MUESTRA EL UPLOAD INICIAL -->
 <div class="image-upload-container" *ngIf="imagesPreview.length === 0" (click)="triggerFileInput()">
   <img src="assets/images/add-images.png" alt="Add Image" />
   <p>Add Images</p>
